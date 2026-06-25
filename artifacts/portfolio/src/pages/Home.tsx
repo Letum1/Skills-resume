@@ -55,6 +55,7 @@ interface PathData {
   education: Education[];
   certifications: Certification[];
   languages: string[];
+  hobbies: string;
   tools?: string[];
   projects?: { title: string; description: string; tags: string[] }[];
 }
@@ -140,6 +141,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
   {
     id: "tech",
@@ -220,6 +222,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
   {
     id: "security",
@@ -293,6 +296,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
 ];
 
@@ -303,143 +307,196 @@ const TIMELINE = [
   { date: "Aug 2024 – Present", title: "Security Guard", org: "C6 Lakeside, Taguig City", tag: "Service", color: "bg-violet-400" },
 ];
 
-/* ─── Paper-style resume document rendered as bond-paper pages ─── */
-function ResumeDocument({ path }: { path: PathData }) {
+/* ── Shared resume style constants ── */
+const RS = {
+  name:        { fontSize: "24pt", fontWeight: "800", color: "#1a3a8c", textTransform: "uppercase" as const, letterSpacing: "1.5px", margin: "0 0 4px 0", fontFamily: "Arial, sans-serif" },
+  contact:     { fontSize: "10pt", color: "#333", fontFamily: "Arial, sans-serif", margin: "0 0 2px 0" },
+  sectionHead: { fontSize: "10pt", fontWeight: "800", color: "#1a3a8c", textTransform: "uppercase" as const, letterSpacing: "1.5px", borderBottom: "2px solid #1a3a8c", paddingBottom: "3px", marginBottom: "8px", marginTop: "0", fontFamily: "Arial, sans-serif" },
+  body:        { fontSize: "10.5pt", color: "#222", lineHeight: "1.5", margin: "0" },
+  bold:        { fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: "0 0 2px 0" },
+  small:       { fontSize: "10pt", color: "#555", margin: "0", fontFamily: "Arial, sans-serif", whiteSpace: "nowrap" as const },
+  pageNum:     { fontSize: "9pt", color: "#aaa", fontFamily: "Arial, sans-serif" },
+};
+
+/* Reusable section heading */
+function RH({ children }: { children: string }) {
+  return <h2 style={RS.sectionHead}>{children}</h2>;
+}
+
+/* ─── Page 1: Header + Profile + Accomplishments + Experience/Projects + Education ─── */
+function ResumePage1({ path }: { path: PathData }) {
   return (
-    <div style={{ fontFamily: "'Times New Roman', Georgia, serif" }}>
-      {/* PAGE 1 */}
-      <div className="resume-page bg-white text-gray-900 w-full" style={{ padding: "0.55in 0.65in", minHeight: "10.5in", boxSizing: "border-box" }}>
-        {/* Header */}
-        <div style={{ borderBottom: "3px solid #1a2a4a", paddingBottom: "10px", marginBottom: "14px" }}>
-          <h1 style={{ fontSize: "26pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", margin: "0 0 2px 0", textTransform: "uppercase" }}>
-            {PERSONAL_DATA.name}
-          </h1>
-          <p style={{ fontSize: "10pt", color: "#2a5298", fontFamily: "Arial, sans-serif", letterSpacing: "1.5px", textTransform: "uppercase", margin: "0 0 6px 0" }}>
-            {path.label}
-          </p>
-          <div style={{ fontSize: "9.5pt", color: "#444", fontFamily: "Arial, sans-serif", display: "flex", gap: "16px", flexWrap: "wrap" }}>
-            <span>{PERSONAL_DATA.location}</span>
-            <span>|</span>
-            <span>{PERSONAL_DATA.email}</span>
-            <span>|</span>
-            <span>{PERSONAL_DATA.phone}</span>
+    <div
+      className="resume-page"
+      style={{
+        background: "#fff",
+        width: "816px",
+        minHeight: "1056px",
+        padding: "52px 62px 48px",
+        boxSizing: "border-box",
+        position: "relative",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      {/* Name & Contact */}
+      <div style={{ marginBottom: "14px" }}>
+        <h1 style={RS.name}>{PERSONAL_DATA.name}</h1>
+        <p style={RS.contact}>
+          {PERSONAL_DATA.location}&nbsp; | &nbsp;
+          <span style={{ color: "#1a3a8c" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
+          {PERSONAL_DATA.phone}
+        </p>
+      </div>
+
+      {/* Profile */}
+      <div style={{ marginBottom: "12px" }}>
+        <RH>Profile</RH>
+        <p style={{ ...RS.body, fontWeight: "700" }}>{path.profile}</p>
+      </div>
+
+      {/* Accomplishments */}
+      <div style={{ marginBottom: "12px" }}>
+        <RH>Accomplishments</RH>
+        {path.accomplishments.map((sec, i) => (
+          <div key={i} style={{ marginBottom: "6px" }}>
+            <p style={RS.bold}>{sec.heading}:</p>
+            {sec.items.slice(0, 1).map((item, j) => (
+              <p key={j} style={{ ...RS.body, marginLeft: "0" }}>{item}</p>
+            ))}
           </div>
-        </div>
+        ))}
+      </div>
 
-        {/* Profile */}
-        <div style={{ marginBottom: "14px" }}>
-          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "7px", fontFamily: "Arial, sans-serif" }}>
-            Profile
-          </h2>
-          <p style={{ fontSize: "10.5pt", lineHeight: "1.55", color: "#222", margin: 0 }}>{path.profile}</p>
-        </div>
-
-        {/* Accomplishments */}
-        <div style={{ marginBottom: "14px" }}>
-          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-            Key Accomplishments
-          </h2>
-          {path.accomplishments.map((section, i) => (
+      {/* Professional Experience */}
+      {path.experience.length > 0 && (
+        <div style={{ marginBottom: "12px" }}>
+          <RH>{path.id === "housekeeping" ? "Professional Experience" : "Professional Experience"}</RH>
+          {path.experience.map((exp, i) => (
             <div key={i} style={{ marginBottom: "8px" }}>
-              <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: "0 0 2px 0" }}>{section.heading}:</p>
-              {section.items.map((item, j) => (
-                <p key={j} style={{ fontSize: "10.5pt", color: "#333", margin: "0 0 1px 14px", lineHeight: "1.5" }}>{item}</p>
-              ))}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={RS.bold}>{exp.role}, {exp.company}</p>
+                <p style={RS.small}>{exp.date}</p>
+              </div>
+              <p style={{ ...RS.body, color: "#555" }}>{exp.company.split(",")[1]?.trim() || ""}</p>
+              <p style={{ ...RS.body, color: "#555" }}>{exp.role}</p>
             </div>
           ))}
         </div>
+      )}
 
-        {/* Experience */}
-        {path.experience.length > 0 && (
-          <div style={{ marginBottom: "14px" }}>
-            <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-              {path.id === "housekeeping" ? "Additional Experience" : "Professional Experience"}
-            </h2>
-            {path.experience.map((exp, i) => (
-              <div key={i} style={{ marginBottom: "8px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{exp.role}, {exp.company}</p>
-                  <p style={{ fontSize: "10pt", color: "#555", margin: 0, fontFamily: "Arial, sans-serif", whiteSpace: "nowrap", marginLeft: "12px" }}>{exp.date}</p>
-                </div>
-                {exp.bullets && (
-                  <div style={{ marginTop: "4px" }}>
-                    {exp.bullets.map((b, j) => (
-                      <p key={j} style={{ fontSize: "10.5pt", color: "#333", margin: "0 0 2px 14px", lineHeight: "1.5" }}>• {b}</p>
-                    ))}
-                  </div>
-                )}
+      {/* Projects (Tech path only) */}
+      {path.projects && (
+        <div style={{ marginBottom: "12px" }}>
+          <RH>Projects</RH>
+          {path.projects.map((proj, i) => (
+            <div key={i} style={{ marginBottom: "6px" }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                <p style={RS.bold}>{proj.title}</p>
+                <p style={{ ...RS.small, fontSize: "9.5pt" }}>— {proj.tags.join(", ")}</p>
               </div>
-            ))}
-          </div>
-        )}
-
-        {/* Projects (Tech only) */}
-        {path.projects && (
-          <div style={{ marginBottom: "14px" }}>
-            <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-              Projects
-            </h2>
-            {path.projects.map((proj, i) => (
-              <div key={i} style={{ marginBottom: "7px" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
-                  <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{proj.title}</p>
-                  <p style={{ fontSize: "9.5pt", color: "#777", margin: 0, fontFamily: "Arial, sans-serif" }}>— {proj.tags.join(", ")}</p>
-                </div>
-                <p style={{ fontSize: "10.5pt", color: "#333", margin: "2px 0 0 14px", lineHeight: "1.5" }}>{proj.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Areas of Expertise */}
-        <div style={{ marginBottom: "14px" }}>
-          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-            Areas of Expertise
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px 24px" }}>
-            {path.expertise.map((skill, i) => (
-              <p key={i} style={{ fontSize: "10.5pt", color: "#333", margin: 0 }}>• {skill}</p>
-            ))}
-          </div>
-        </div>
-
-        {/* Education */}
-        <div style={{ marginBottom: "14px" }}>
-          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-            Education
-          </h2>
-          {path.education.map((edu, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "4px" }}>
-              <div>
-                <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{edu.school}</p>
-                <p style={{ fontSize: "10.5pt", color: "#555", margin: 0 }}>{edu.degree}</p>
-              </div>
-              <p style={{ fontSize: "10pt", color: "#555", margin: 0, fontFamily: "Arial, sans-serif", whiteSpace: "nowrap", marginLeft: "12px" }}>{edu.date}</p>
+              <p style={{ ...RS.body, marginLeft: "0" }}>{proj.description}</p>
             </div>
           ))}
         </div>
+      )}
 
-        {/* Licenses & Certifications */}
-        <div style={{ marginBottom: "14px" }}>
-          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-            Licenses & Certifications
-          </h2>
-          {path.certifications.map((cert, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
-              <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{cert.name}, {cert.issuer}</p>
-              <p style={{ fontSize: "10pt", color: "#555", margin: 0, fontFamily: "Arial, sans-serif", whiteSpace: "nowrap", marginLeft: "12px" }}>{cert.date}</p>
+      {/* Education */}
+      <div style={{ marginBottom: "0" }}>
+        <RH>Education</RH>
+        {path.education.map((edu, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+            <div>
+              <p style={RS.bold}>{edu.school}</p>
+              <p style={{ ...RS.body, color: "#555" }}>Highschool</p>
+              <p style={{ ...RS.body, color: "#555" }}>Graduated high school</p>
             </div>
-          ))}
-        </div>
+            <p style={RS.small}>{edu.date}</p>
+          </div>
+        ))}
+      </div>
 
-        {/* Languages */}
-        <div>
-          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
-            Languages
-          </h2>
-          <p style={{ fontSize: "10.5pt", color: "#333", margin: 0 }}>{path.languages.join(", ")}</p>
+      {/* Page number */}
+      <div style={{ position: "absolute", bottom: "28px", right: "62px", ...RS.pageNum }}>1</div>
+    </div>
+  );
+}
+
+/* ─── Page 2: Expertise + Certifications + Training + Experience + Languages + Hobbies ─── */
+function ResumePage2({ path }: { path: PathData }) {
+  return (
+    <div
+      className="resume-page"
+      style={{
+        background: "#fff",
+        width: "816px",
+        minHeight: "1056px",
+        padding: "52px 62px 48px",
+        boxSizing: "border-box",
+        position: "relative",
+        fontFamily: "Arial, sans-serif",
+      }}
+    >
+      {/* Areas of Expertise — 4-column grid matching reference */}
+      <div style={{ marginBottom: "14px" }}>
+        <RH>Areas of Expertise</RH>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "4px 16px" }}>
+          {path.expertise.map((skill, i) => (
+            <p key={i} style={{ ...RS.body, margin: "0 0 2px 0" }}>• {skill}</p>
+          ))}
         </div>
       </div>
+
+      {/* Licenses & Certifications */}
+      <div style={{ marginBottom: "14px" }}>
+        <RH>Licenses &amp; Certifications</RH>
+        {path.certifications.map((cert, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+            <p style={RS.bold}>{cert.name} , {cert.issuer}</p>
+            <p style={RS.small}>{cert.date}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Additional Experience (for HK: list security guard under Additional Experience) */}
+      {path.id === "housekeeping" && path.experience.length > 0 && (
+        <div style={{ marginBottom: "14px" }}>
+          <RH>Additional Experience</RH>
+          {path.experience.map((exp, i) => (
+            <div key={i} style={{ marginBottom: "6px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={RS.bold}>{exp.role}, {exp.company}</p>
+                <p style={RS.small}>{exp.date}</p>
+              </div>
+              <p style={{ ...RS.body, color: "#555" }}>{exp.company.split(",")[1]?.trim() || "Taguig City"}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Languages */}
+      <div style={{ marginBottom: "14px" }}>
+        <RH>Languages</RH>
+        <p style={RS.body}>{path.languages.join(", ")}</p>
+      </div>
+
+      {/* Hobbies */}
+      <div style={{ marginBottom: "14px" }}>
+        <RH>Hobbies</RH>
+        <p style={RS.body}>{path.hobbies}</p>
+      </div>
+
+      {/* Page number */}
+      <div style={{ position: "absolute", bottom: "28px", right: "62px", ...RS.pageNum }}>2</div>
+    </div>
+  );
+}
+
+/* ─── Full two-page document (used for print portal) ─── */
+function ResumeDocument({ path }: { path: PathData }) {
+  return (
+    <div style={{ fontFamily: "Arial, sans-serif" }}>
+      <ResumePage1 path={path} />
+      <ResumePage2 path={path} />
     </div>
   );
 }
@@ -454,14 +511,14 @@ function PrintPortal({ path }: { path: PathData }) {
   );
 }
 
-/* On-screen paper preview with desk background */
+/* On-screen paper preview — two pages on a gray desk, each page is letter-sized */
 function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }) {
   return (
     <div>
       {/* Toolbar */}
       <div className="no-print flex items-center justify-between mb-4 px-2">
         <p className="text-xs font-mono text-muted-foreground">
-          {path.label} — Resume Preview
+          {path.label} — Resume Preview (2 pages)
         </p>
         <button
           data-testid="button-print"
@@ -473,17 +530,30 @@ function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }
         </button>
       </div>
 
-      {/* Desk background — gray */}
-      <div className="rounded-xl overflow-hidden" style={{ background: "#525659", padding: "32px 24px" }}>
-        {/* Paper shadow wrapper */}
+      {/* Desk — gray background, scrollable */}
+      <div
+        className="rounded-xl overflow-auto"
+        style={{ background: "#525659", padding: "32px 24px" }}
+      >
+        {/* Scale-down wrapper so 816px paper fits on smaller screens */}
         <div
-          className="mx-auto"
           style={{
-            maxWidth: "816px",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3)",
+            transformOrigin: "top center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "28px",
           }}
         >
-          <ResumeDocument path={path} />
+          {/* Page 1 */}
+          <div style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.3)", lineHeight: 0 }}>
+            <ResumePage1 path={path} />
+          </div>
+
+          {/* Page 2 */}
+          <div style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.3)", lineHeight: 0 }}>
+            <ResumePage2 path={path} />
+          </div>
         </div>
       </div>
     </div>
