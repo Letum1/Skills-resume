@@ -676,7 +676,7 @@ export default function Home() {
   const [activePath, setActivePath] = useState<PathId>("housekeeping");
   const [showResume, setShowResume] = useState(false);
   const [formName, setFormName] = useState("");
-  const [formEmail, setFormEmail] = useState("");
+  const [formSubject, setFormSubject] = useState("");
   const [formMsg, setFormMsg] = useState("");
 
   const activePathData = PATHS.find(p => p.id === activePath) ?? PATHS[0];
@@ -693,8 +693,8 @@ export default function Home() {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Message from ${formName || "Portfolio Visitor"}`);
-    const body = encodeURIComponent(`From: ${formName}\nEmail: ${formEmail}\n\n${formMsg}`);
+    const subject = encodeURIComponent(formSubject || "Message from Portfolio");
+    const body = encodeURIComponent(`From: ${formName}\n\n${formMsg}`);
     window.location.href = `mailto:princeclyde80@gmail.com?subject=${subject}&body=${body}`;
   };
 
@@ -1153,7 +1153,7 @@ export default function Home() {
               <CardContent>
                 <form className="space-y-5" onSubmit={handleSendMessage}>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Name</label>
+                    <label className="text-sm font-medium">Your Name</label>
                     <Input
                       data-testid="input-name"
                       placeholder="Your name"
@@ -1163,14 +1163,13 @@ export default function Home() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Email</label>
+                    <label className="text-sm font-medium">Subject</label>
                     <Input
-                      data-testid="input-email"
-                      type="email"
-                      placeholder="your@email.com"
+                      data-testid="input-subject"
+                      placeholder="What's this about?"
                       className="bg-secondary/50"
-                      value={formEmail}
-                      onChange={e => setFormEmail(e.target.value)}
+                      value={formSubject}
+                      onChange={e => setFormSubject(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
