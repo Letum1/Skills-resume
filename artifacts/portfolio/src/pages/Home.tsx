@@ -68,7 +68,7 @@ const PATHS: PathData[] = [
     accentColor: "text-amber-400",
     tagBg: "bg-amber-400/10 text-amber-400 border-amber-400/30",
     profile:
-      "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal TESDA NC II certification in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Possesses exceptional conflict-resolution skills and a proactive mindset, fully prepared to deliver 5-star service and maintain premium brand standards in a fast-paced luxury hotel or cruise line environment.",
+      "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal TESDA NC II certification in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Applies strong financial literacy and budgeting principles to optimize inventory control, reduce supply waste, and support cost-efficient operations — key competencies for large-scale shipboard hospitality environments.",
     accomplishments: [
       {
         heading: "Health, Safety & Sanitization Protocols",
@@ -85,10 +85,10 @@ const PATHS: PathData[] = [
         ],
       },
       {
-        heading: "Operational Discipline & Discretion",
+        heading: "Inventory Control & Resource Management",
         items: [
-          "High standard of personal grooming, professional communication, and strict adherence to guest privacy.",
-          "Demonstrates consistent reliability, punctuality, and attention to brand presentation.",
+          "Leveraged financial literacy and budgeting principles to optimize inventory tracking and significantly reduce supply waste.",
+          "Practiced strict resource allocation and cost-control measures aligned with operational budget goals in high-volume service environments.",
         ],
       },
       {
@@ -111,11 +111,12 @@ const PATHS: PathData[] = [
       "Public Area & Deep Cleaning Maintenance",
       "Turndown & Bed-Making Service",
       "Health & Safety Compliance",
-      "Chemical Safety & Hazard Prevention",
+      "Inventory Control & Management",
+      "Resource Allocation",
+      "Budgeting & Cost Management",
+      "Waste Reduction & Operational Efficiency",
       "Guest Privacy & Discretion",
       "Time Management Under Pressure",
-      "Report Writing",
-      "Public Interaction",
     ],
     experience: [
       {
@@ -125,7 +126,8 @@ const PATHS: PathData[] = [
         bullets: [
           "Maintained a 100% safety record by enforcing strict access control protocols for all personnel and visitors.",
           "Demonstrated operational discipline and professional conduct in a service-facing environment.",
-          "Developed strong conflict-resolution and communication skills through daily public interaction.",
+          "Leveraged strong financial literacy and budgeting principles to optimize inventory tracking, reducing supply waste and operational costs.",
+          "Maintained precise logs of high-volume transactions and operations, ensuring 100% accountability and zero discrepancies.",
         ],
       },
     ],
@@ -138,7 +140,7 @@ const PATHS: PathData[] = [
     ],
     certifications: [
       { name: "Housekeeping NC II", issuer: "TESDA", date: "Jan 2026 – May 2026" },
-      { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
+      { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
     hobbies: "Gaming, Cardio Exercise, Making Websites",
@@ -219,7 +221,7 @@ const PATHS: PathData[] = [
       },
     ],
     certifications: [
-      { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
+      { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
     hobbies: "Gaming, Cardio Exercise, Making Websites",
@@ -270,7 +272,8 @@ const PATHS: PathData[] = [
       "Report Writing & Incident Documentation",
       "Security Protocols & Emergency Response",
       "Customer Service in High-Volume Settings",
-      "Financial Literacy",
+      "Financial Literacy & Budgeting",
+      "Resource Allocation & Cost Control",
     ],
     experience: [
       {
@@ -280,8 +283,8 @@ const PATHS: PathData[] = [
         bullets: [
           "Conduct regular patrols and enforce access control protocols for all personnel and visitors.",
           "Deliver customer-facing services professionally, handling inquiries and resolving issues daily.",
-          "Maintain incident reports and escalate security concerns according to company procedures.",
-          "Maintained a 100% safety record across all assigned shifts.",
+          "Maintained precise logs of high-volume digital and physical transactions, ensuring 100% accountability and zero discrepancies.",
+          "Applied financial literacy and budgeting principles to support cost-control measures and resource management across daily operations.",
         ],
       },
     ],
@@ -293,7 +296,7 @@ const PATHS: PathData[] = [
       },
     ],
     certifications: [
-      { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
+      { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
     hobbies: "Gaming, Cardio Exercise, Making Websites",
@@ -302,7 +305,7 @@ const PATHS: PathData[] = [
 
 const TIMELINE = [
   { date: "Jan 2026 – May 2026", title: "Housekeeping NC II Certification", org: "TESDA", tag: "Hospitality", color: "bg-amber-400" },
-  { date: "Dec 2025", title: "Certificate in Financial Literacy", org: "TESDA", tag: "Certification", color: "bg-emerald-400" },
+  { date: "Dec 2025", title: "Financial Literacy and Budgeting", org: "BDO Foundation", tag: "Certification", color: "bg-emerald-400" },
   { date: "Aug 2024 – May 2025", title: "High School Diploma", org: "Grant Cecilia Integrated School", tag: "Education", color: "bg-sky-400" },
   { date: "Aug 2024 – Present", title: "Security Guard", org: "C6 Lakeside, Taguig City", tag: "Service", color: "bg-violet-400" },
 ];

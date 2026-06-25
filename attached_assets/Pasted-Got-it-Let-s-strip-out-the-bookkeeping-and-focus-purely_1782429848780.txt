@@ -1,0 +1,19 @@
+Got it! Let's strip out the bookkeeping and focus purely on your **financial literacy, budgeting, and asset management skills**, framing them perfectly for **cruise ship and maritime hospitality roles** (like housekeeping or service crew).
+On a cruise ship, having strong financial literacy is a massive asset because it shows you understand resource management, cost control, inventory budgeting, and minimizing waste—all of which are critical in large-scale shipboard operations.
+Here is how you can tell Replit or any AI tool to update your resume:
+### 1. Certifications & Education Section
+Instead of bookkeeping, focus strictly on the financial literacy milestone:
+ * **Certifications / Training:**
+   * Financial Literacy and Budgeting – BDO Foundation
+### 2. Core Competencies (For Cruise/Maritime Roles)
+Add a specific section that merges your hospitality/housekeeping training with your financial skills:
+ * **Professional Skills:** Inventory Control & Management, Resource Allocation, Budgeting & Cost Management, Financial Literacy, Waste Reduction, Operational Efficiency.
+### 3. Professional Experience Bullet Points
+If you want to weave these skills into your previous service crew or training history to impress cruise lines, use points like these:
+ * "Leveraged strong **financial literacy and budgeting principles** to optimize inventory tracking, significantly reducing supply waste and operational costs."
+ * "Practiced strict resource management and cost-control measures during large-scale hospitality operations, aligning with corporate budget goals."
+ * "Maintained precise logs of high-volume digital and physical commercial transactions, ensuring 100% accountability and zero discrepancies."
+### The exact prompt to give your AI/Replit tool:
+> *"Please update my resume tailored for **Cruise Line Hospitality/Housekeeping roles**. Under Certifications, list my **BDO Foundation Financial Literacy and Budgeting** training (remove any mention of bookkeeping). In the skills section, add **Resource Allocation, Inventory Budgeting, and Cost Control**. Update my experience bullet points to highlight how I apply financial literacy to manage supplies efficiently, control costs, and reduce waste in a high-volume service environment."*
+> 
+Since you are managing multiple versions of your resume right now, do you want to lock down the exact text for the Cruise Housekeeping experience section next, or should we refine a different part?
