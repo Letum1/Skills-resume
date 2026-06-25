@@ -3,9 +3,14 @@
   "buildCommand": "cd artifacts/portfolio && npm run build",
   "outputDirectory": "artifacts/portfolio/dist",
   "framework": null,
+  "functions": {
+    "api/contact.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
     {
-      "source": "/((?!api/).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

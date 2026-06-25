@@ -680,6 +680,7 @@ export default function Home() {
   const [formSubject, setFormSubject] = useState("");
   const [formMsg, setFormMsg] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [formError, setFormError] = useState("");
 
   const activePathData = PATHS.find(p => p.id === activePath) ?? PATHS[0];
 
@@ -696,12 +697,14 @@ export default function Home() {
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("sending");
+    setFormError("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: formName, email: formEmail, subject: formSubject, message: formMsg }),
       });
+      const data = await res.json().catch(() => ({}));
       if (res.ok) {
         setFormStatus("sent");
         setFormName("");
@@ -709,9 +712,11 @@ export default function Home() {
         setFormSubject("");
         setFormMsg("");
       } else {
+        setFormError(data.error || `Error ${res.status}`);
         setFormStatus("error");
       }
-    } catch {
+    } catch (err) {
+      setFormError(String(err));
       setFormStatus("error");
     }
   };
@@ -1217,7 +1222,11 @@ export default function Home() {
                     <p className="text-sm text-emerald-400 font-medium text-center py-2">✓ Message sent! I'll get back to you soon.</p>
                   )}
                   {formStatus === "error" && (
-                    <p className="text-sm text-red-400 font-medium text-center py-2">Something went wrong. Try emailing directly: princeclyde80@gmail.com</p>
+                    <div className="text-sm text-red-400 font-medium text-center py-2 space-y-1">
+                      <p>Something went wrong.</p>
+                      {formError && <p className="text-xs opacity-75 font-mono">{formError}</p>}
+                      <p className="text-xs">Or email directly: princeclyde80@gmail.com</p>
+                    </div>
                   )}
                   <Button data-testid="button-submit" type="submit" disabled={formStatus === "sending" || formStatus === "sent"} className="w-full h-12 text-base">
                     <Mail className="w-4 h-4 mr-2" /> {formStatus === "sending" ? "Sending..." : formStatus === "sent" ? "Sent!" : "Send Message"}
