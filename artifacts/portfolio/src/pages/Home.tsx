@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer } from "lucide-react";
+import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +16,7 @@ const PERSONAL_DATA = {
   languages: ["English", "Tagalog"],
 };
 
-type PathId = "housekeeping" | "tech" | "security";
+type PathId = "housekeeping" | "tech" | "security" | "all";
 
 interface ResumeSection {
   heading: string;
@@ -527,6 +527,64 @@ function PrintPortal({ path }: { path: PathData }) {
   );
 }
 
+/* All-paths resume viewer — shows all 3 resumes (6 pages) on the gray desk */
+function AllPathsResumeViewer({ onPrint }: { onPrint: () => void }) {
+  const deskRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const compute = () => {
+      if (!deskRef.current) return;
+      const available = deskRef.current.clientWidth - 48;
+      setScale(Math.min(1, available / PAGE_W));
+    };
+    compute();
+    const ro = new ResizeObserver(compute);
+    if (deskRef.current) ro.observe(deskRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const scaledH = Math.round(scale * PAGE_H);
+  const scaledW = Math.round(scale * PAGE_W);
+
+  const allPages = PATHS.flatMap(path => [
+    { key: `${path.id}-p1`, label: path.label, el: <ResumePage1 path={path} /> },
+    { key: `${path.id}-p2`, label: null, el: <ResumePage2 path={path} /> },
+  ]);
+
+  return (
+    <div>
+      <div className="no-print flex items-center justify-between mb-4 px-2 gap-3 flex-wrap">
+        <p className="text-xs font-mono text-muted-foreground">All Paths — 6-page resume</p>
+        <button
+          onClick={onPrint}
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+        >
+          <Printer className="w-4 h-4" /> Print / Save as PDF
+        </button>
+      </div>
+      <div ref={deskRef} className="rounded-xl" style={{ background: "#525659", padding: "24px" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "20px" }}>
+          {allPages.map(({ key, label, el }) => (
+            <div key={key} style={{ display: "flex", flexDirection: "column", gap: "8px", width: `${scaledW}px` }}>
+              {label && (
+                <p style={{ color: "#d4d4d4", fontFamily: "monospace", fontSize: "11px", textTransform: "uppercase", letterSpacing: "1px" }}>
+                  ── {label}
+                </p>
+              )}
+              <div style={{ width: `${scaledW}px`, height: `${scaledH}px`, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.55)" }}>
+                <div style={{ transform: `scale(${scale})`, transformOrigin: "top left", width: `${PAGE_W}px`, lineHeight: "normal" }}>
+                  {el}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const PAGE_W = 816;
 const PAGE_H = 1056;
 const PAGE_GAP = 24;
@@ -617,8 +675,11 @@ function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }
 export default function Home() {
   const [activePath, setActivePath] = useState<PathId>("housekeeping");
   const [showResume, setShowResume] = useState(false);
+  const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formMsg, setFormMsg] = useState("");
 
-  const activePathData = PATHS.find(p => p.id === activePath)!;
+  const activePathData = PATHS.find(p => p.id === activePath) ?? PATHS[0];
 
   const scrollToSection = (id: string, pathId?: PathId) => {
     if (pathId) setActivePath(pathId);
@@ -628,8 +689,13 @@ export default function Home() {
     }, 50);
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = () => { window.print(); };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Message from ${formName || "Portfolio Visitor"}`);
+    const body = encodeURIComponent(`From: ${formName}\nEmail: ${formEmail}\n\n${formMsg}`);
+    window.location.href = `mailto:princeclyde80@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -735,6 +801,19 @@ export default function Home() {
                   </button>
                 );
               })}
+              {/* All Paths tab */}
+              <button
+                data-testid="tab-all"
+                onClick={() => { setActivePath("all"); setShowResume(false); }}
+                className={`flex items-center gap-3 px-6 py-3.5 rounded-xl font-mono text-sm transition-all duration-300 ${
+                  activePath === "all"
+                    ? "bg-primary text-primary-foreground shadow-[0_0_24px_rgba(212,175,55,0.25)]"
+                    : "bg-secondary text-muted-foreground hover:bg-secondary/80 border border-border"
+                }`}
+              >
+                <LayoutGrid className="w-4 h-4" />
+                All Paths
+              </button>
             </div>
           </div>
 
@@ -765,7 +844,55 @@ export default function Home() {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.35 }}
               >
-                <ResumeViewer path={activePathData} onPrint={handlePrint} />
+                {activePath === "all" ? (
+                  /* All paths: show all three resumes stacked */
+                  <AllPathsResumeViewer onPrint={handlePrint} />
+                ) : (
+                  <ResumeViewer path={activePathData} onPrint={handlePrint} />
+                )}
+              </motion.div>
+            ) : activePath === "all" ? (
+              /* All paths overview: three summary cards side by side */
+              <motion.div
+                key="overview-all"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.35 }}
+              >
+                <p className="text-muted-foreground mb-8 text-sm font-mono">All three career paths — select any to see the full resume.</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {PATHS.map(path => {
+                    const Icon = path.icon;
+                    return (
+                      <div key={path.id} className="bg-secondary/30 border border-border/50 rounded-2xl p-6 flex flex-col gap-4">
+                        <div className={`flex items-center gap-3 font-bold text-lg ${path.accentColor}`}>
+                          <Icon className="w-5 h-5" /> {path.label}
+                        </div>
+                        <p className="text-muted-foreground text-sm leading-relaxed flex-1">{path.profile.slice(0, 180)}…</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {path.expertise.slice(0, 5).map((s, i) => (
+                            <span key={i} className="text-xs bg-background border border-border px-2 py-1 rounded text-foreground">{s}</span>
+                          ))}
+                        </div>
+                        <div className="flex gap-2 pt-2">
+                          <button
+                            onClick={() => { setActivePath(path.id as PathId); setShowResume(false); }}
+                            className={`flex-1 text-xs font-mono py-2 rounded-lg border border-border/60 hover:border-primary/40 transition-colors`}
+                          >
+                            Overview
+                          </button>
+                          <button
+                            onClick={() => { setActivePath(path.id as PathId); setShowResume(true); }}
+                            className={`flex-1 text-xs font-mono py-2 rounded-lg bg-primary/10 hover:bg-primary/20 ${path.accentColor} border border-primary/20 transition-colors flex items-center justify-center gap-1`}
+                          >
+                            <FileText className="w-3 h-3" /> Resume
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </motion.div>
             ) : (
               <motion.div
@@ -1021,23 +1148,44 @@ export default function Home() {
             <Card className="bg-background border-border">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
-                <CardDescription>I'll get back to you as soon as possible.</CardDescription>
+                <CardDescription>Opens your email app with your message pre-filled.</CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-5" onSubmit={e => e.preventDefault()}>
+                <form className="space-y-5" onSubmit={handleSendMessage}>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Name</label>
-                    <Input data-testid="input-name" placeholder="Your name" className="bg-secondary/50" />
+                    <Input
+                      data-testid="input-name"
+                      placeholder="Your name"
+                      className="bg-secondary/50"
+                      value={formName}
+                      onChange={e => setFormName(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Email</label>
-                    <Input data-testid="input-email" type="email" placeholder="your@email.com" className="bg-secondary/50" />
+                    <Input
+                      data-testid="input-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      className="bg-secondary/50"
+                      value={formEmail}
+                      onChange={e => setFormEmail(e.target.value)}
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Message</label>
-                    <Textarea data-testid="input-message" placeholder="How can we work together?" className="min-h-[140px] bg-secondary/50" />
+                    <Textarea
+                      data-testid="input-message"
+                      placeholder="How can we work together?"
+                      className="min-h-[140px] bg-secondary/50"
+                      value={formMsg}
+                      onChange={e => setFormMsg(e.target.value)}
+                    />
                   </div>
-                  <Button data-testid="button-submit" type="submit" className="w-full h-12 text-base">Send Message</Button>
+                  <Button data-testid="button-submit" type="submit" className="w-full h-12 text-base">
+                    <Mail className="w-4 h-4 mr-2" /> Send via Email App
+                  </Button>
                 </form>
               </CardContent>
             </Card>
