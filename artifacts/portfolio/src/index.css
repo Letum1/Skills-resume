@@ -128,47 +128,49 @@
   }
 }
 
+/* ── Screen-only: hide the print portal so it doesn't show on page ── */
+#resume-print-root {
+  display: none;
+}
+
 /* ── Print / PDF styles ─────────────────────────────── */
 @media print {
   @page {
     size: Letter;
-    margin: 0.55in 0.65in;
+    margin: 0;
   }
 
   html, body {
     background: #ffffff !important;
     color: #111 !important;
-    font-size: 11pt;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  /* Hide every UI element except the resume document */
+  /* Hide everything on screen */
   body > * {
     display: none !important;
   }
 
+  /* Show only the resume print root */
   #resume-print-root {
     display: block !important;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
+    width: 100%;
     background: #fff;
-    overflow: visible;
   }
 
+  /* Each paper page fills one printed Letter sheet */
   .resume-page {
     box-shadow: none !important;
     border-radius: 0 !important;
     margin: 0 !important;
-    padding: 0 !important;
-    max-width: 100% !important;
     width: 100% !important;
-    page-break-inside: avoid;
-  }
-
-  .resume-page + .resume-page {
-    page-break-before: always;
+    min-height: 0 !important;
+    page-break-after: always;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .no-print {

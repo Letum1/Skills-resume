@@ -501,10 +501,10 @@ function ResumeDocument({ path }: { path: PathData }) {
   );
 }
 
-/* Hidden print portal — only rendered during window.print() */
+/* Print portal — hidden on screen via CSS, shown only during window.print() */
 function PrintPortal({ path }: { path: PathData }) {
   return createPortal(
-    <div id="resume-print-root" style={{ display: "none" }}>
+    <div id="resume-print-root">
       <ResumeDocument path={path} />
     </div>,
     document.body
