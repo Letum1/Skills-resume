@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd artifacts/portfolio && npm install && npm run build",
+  "installCommand": "cd artifacts/portfolio && npm install",
+  "buildCommand": "cd artifacts/portfolio && npm run build",
   "outputDirectory": "artifacts/portfolio/dist",
-  "installCommand": "echo skip",
   "framework": null,
   "rewrites": [
     {
