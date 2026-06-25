@@ -680,6 +680,7 @@ export default function Home() {
   const [showResume, setShowResume] = useState(false);
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
+  const [formPhone, setFormPhone] = useState("");
   const [formSubject, setFormSubject] = useState("");
   const [formMsg, setFormMsg] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -711,6 +712,7 @@ export default function Home() {
         body: JSON.stringify({
           name: formName,
           email: formEmail,
+          phone: formPhone || "Not provided",
           subject: formSubject || `New message from ${formName}`,
           message: formMsg,
           _captcha: "false",
@@ -721,6 +723,7 @@ export default function Home() {
         setFormStatus("sent");
         setFormName("");
         setFormEmail("");
+        setFormPhone("");
         setFormSubject("");
         setFormMsg("");
       } else {
@@ -1208,6 +1211,17 @@ export default function Home() {
                       required
                       value={formEmail}
                       onChange={e => setFormEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Phone / WhatsApp <span className="text-muted-foreground font-normal">(optional)</span></label>
+                    <Input
+                      data-testid="input-phone"
+                      type="tel"
+                      placeholder="+63 912 345 6789"
+                      className="bg-secondary/50"
+                      value={formPhone}
+                      onChange={e => setFormPhone(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
