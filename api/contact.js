@@ -3,10 +3,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, subject, message } = req.body;
+  const { name, email, subject, message } = req.body;
 
-  if (!name || !message) {
-    return res.status(400).json({ error: "Name and message are required" });
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "Name, email and message are required" });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -24,9 +24,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: "Portfolio Contact <onboarding@resend.dev>",
         to: ["princeclyde80@gmail.com"],
+        reply_to: email,
         subject: subject || `New message from ${name}`,
-        text: `From: ${name}\n\n${message}`,
-        html: `<p><strong>From:</strong> ${name}</p><p>${message.replace(/\n/g, "<br>")}</p>`,
+        text: `From: ${name}\nEmail: ${email}\n\n${message}`,
+        html: `
+          <p><strong>From:</strong> ${name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <hr />
+          <p>${message.replace(/\n/g, "<br>")}</p>
+        `,
       }),
     });
 

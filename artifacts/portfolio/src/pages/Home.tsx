@@ -676,6 +676,7 @@ export default function Home() {
   const [activePath, setActivePath] = useState<PathId>("housekeeping");
   const [showResume, setShowResume] = useState(false);
   const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
   const [formSubject, setFormSubject] = useState("");
   const [formMsg, setFormMsg] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -699,11 +700,12 @@ export default function Home() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: formName, subject: formSubject, message: formMsg }),
+        body: JSON.stringify({ name: formName, email: formEmail, subject: formSubject, message: formMsg }),
       });
       if (res.ok) {
         setFormStatus("sent");
         setFormName("");
+        setFormEmail("");
         setFormSubject("");
         setFormMsg("");
       } else {
@@ -1174,8 +1176,21 @@ export default function Home() {
                       data-testid="input-name"
                       placeholder="Your name"
                       className="bg-secondary/50"
+                      required
                       value={formName}
                       onChange={e => setFormName(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Your Email</label>
+                    <Input
+                      data-testid="input-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      className="bg-secondary/50"
+                      required
+                      value={formEmail}
+                      onChange={e => setFormEmail(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
