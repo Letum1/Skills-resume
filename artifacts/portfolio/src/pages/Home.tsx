@@ -699,20 +699,26 @@ export default function Home() {
     setFormStatus("sending");
     setFormError("");
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: formName, email: formEmail, subject: formSubject, message: formMsg }),
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          subject: formSubject || `New message from ${formName}`,
+          from_name: formName,
+          email: formEmail,
+          message: formMsg,
+        }),
       });
       const data = await res.json().catch(() => ({}));
-      if (res.ok) {
+      if (res.ok && data.success) {
         setFormStatus("sent");
         setFormName("");
         setFormEmail("");
         setFormSubject("");
         setFormMsg("");
       } else {
-        setFormError(data.error || `Error ${res.status}`);
+        setFormError(data.message || `Error ${res.status}`);
         setFormStatus("error");
       }
     } catch (err) {
