@@ -1,0 +1,29 @@
+Act as an expert full-stack web developer and UI/UX designer. I want to build a highly professional, modern, and responsive personal portfolio and resume website. 
+
+I am uploading my master list of experiences, skills, and certifications. Because I have a diverse professional background, the website needs to organize my profile cleanly into three distinct paths or tabs, depending on the industry I am targeting:
+1. Housekeeping & Hospitality (aiming for cruise lines, maritime roles, and 5-star hotels)
+2. Tech & Web Development (showcasing my frontend engineering, web apps, and coding projects)
+3. Customer Service & Security (highlighting my experience in active client-facing and service crew roles)
+
+Please use a clean, modern aesthetic—think dark mode or a professional minimalist design with smooth transitions and a clear layout. 
+
+### Core Features to Build:
+1. **Hero Section:** 
+   - A welcoming dynamic introduction. Include a tagline that bridges my versatile skills in service, hospitality, and technology.
+   - Include clear "Call to Action" buttons (e.g., "View Housekeeping Resume", "View Tech Portfolio", "Contact Me").
+
+2. **The "Choose Your Path" Section (Dynamic Filter/Tabs):**
+   - Create an interactive tabbed system or toggle area where a recruiter can click an industry and instantly view an organized, tailored version of my resume.
+   - **Housekeeping Path:** Highlight my maritime/cruise ship housekeeping training, vocational certifications, and attention to detail required for 5-star standards.
+   - **Tech Path:** Show a clean portfolio grid displaying web development projects. Highlight frontend technologies like HTML, CSS, JavaScript, and Firebase backend integration.
+   - **Customer Service Path:** Detail my professional background in service crew and security roles, focusing on communication, problem-solving, and reliability.
+
+3. **Experience & Education Timeline:**
+   - A beautifully formatted timeline displaying my work history. Use visual tags or labels (e.g., [Hospitality], [Tech], [Service]) so everything stays well-categorized.
+   - Section for vocational certifications (such as bookkeeping, financial literacy, and specialized service training).
+
+4. **Contact & Resume Download:**
+   - A clean contact form section.
+   - Download buttons providing specialized PDF resumes matching the different paths.
+
+Let's start by creating the initial single-page application structure using standard clean web technologies (HTML, CSS, JavaScript). Set up the landing page framework, navigation, and the dynamic layout sections so I can verify the look and feel.
