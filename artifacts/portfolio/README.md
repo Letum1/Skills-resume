@@ -19,7 +19,13 @@ A personal portfolio built with React, Vite, and Tailwind CSS.
 - **Output Directory**: `dist`
 
 ### 4. Environment Variables
-No environment variables are required.
+Set this in your Vercel Project Settings → Environment Variables:
+
+| Variable | Value |
+|----------|-------|
+| `VERCEL` | `1` |
+
+This prevents the root monorepo's `preinstall` script from blocking npm on Vercel.
 
 ### 5. Deploy
 Click "Deploy" and your portfolio will be live in seconds.
