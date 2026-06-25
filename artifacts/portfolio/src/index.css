@@ -127,3 +127,51 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+/* ── Print / PDF styles ─────────────────────────────── */
+@media print {
+  @page {
+    size: Letter;
+    margin: 0.55in 0.65in;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #111 !important;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide every UI element except the resume document */
+  body > * {
+    display: none !important;
+  }
+
+  #resume-print-root {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #fff;
+    overflow: visible;
+  }
+
+  .resume-page {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  .resume-page + .resume-page {
+    page-break-before: always;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

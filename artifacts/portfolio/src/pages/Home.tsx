@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, Download, FileText, Star, CheckCircle } from "lucide-react";
+import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createPortal } from "react-dom";
 
 const PERSONAL_DATA = {
   name: "Clyde Miles Bonita",
@@ -53,7 +54,6 @@ interface PathData {
   experience: Experience[];
   education: Education[];
   certifications: Certification[];
-  training?: { name: string; school: string; date: string }[];
   languages: string[];
   tools?: string[];
   projects?: { title: string; description: string; tags: string[] }[];
@@ -67,7 +67,7 @@ const PATHS: PathData[] = [
     accentColor: "text-amber-400",
     tagBg: "bg-amber-400/10 text-amber-400 border-amber-400/30",
     profile:
-      "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal training in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Possesses exceptional conflict-resolution skills and a proactive mindset, fully prepared to deliver 5-star service and maintain premium brand standards in a fast-paced luxury hotel or cruise line environment.",
+      "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal TESDA NC II certification in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Possesses exceptional conflict-resolution skills and a proactive mindset, fully prepared to deliver 5-star service and maintain premium brand standards in a fast-paced luxury hotel or cruise line environment.",
     accomplishments: [
       {
         heading: "Health, Safety & Sanitization Protocols",
@@ -80,7 +80,7 @@ const PATHS: PathData[] = [
         heading: "Time Management & Efficiency",
         items: [
           "Proven ability to manage strict room turnover timelines while maintaining immaculate quality.",
-          "Capable of servicing multiple rooms per shift without compromising standards.",
+          "Capable of servicing multiple rooms per shift without compromising cleanliness standards.",
         ],
       },
       {
@@ -93,7 +93,7 @@ const PATHS: PathData[] = [
       {
         heading: "Guest Relations & Service Excellence",
         items: [
-          "Anticipating guest needs, handling inquiries professionally, and resolving issues effectively under pressure.",
+          "Anticipates guest needs, handles inquiries professionally, and resolves issues effectively under pressure.",
           "Skilled at maintaining a calm, courteous demeanor in high-demand hospitality environments.",
         ],
       },
@@ -116,18 +116,15 @@ const PATHS: PathData[] = [
       "Report Writing",
       "Public Interaction",
     ],
-    training: [
-      { name: "Housekeeping NC II", school: "TESDA", date: "Jan 2026 – May 2026" },
-    ],
     experience: [
       {
         role: "Security Guard",
         company: "C6 Lakeside, Taguig City",
         date: "Aug 2024 – Present",
         bullets: [
-          "Maintained a 100% safety record by enforcing strict access control protocols.",
+          "Maintained a 100% safety record by enforcing strict access control protocols for all personnel and visitors.",
           "Demonstrated operational discipline and professional conduct in a service-facing environment.",
-          "Developed conflict-resolution and communication skills through daily public interaction.",
+          "Developed strong conflict-resolution and communication skills through daily public interaction.",
         ],
       },
     ],
@@ -139,6 +136,7 @@ const PATHS: PathData[] = [
       },
     ],
     certifications: [
+      { name: "Housekeeping NC II", issuer: "TESDA", date: "Jan 2026 – May 2026" },
       { name: "Financial Literacy", issuer: "TESDA", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
@@ -162,7 +160,7 @@ const PATHS: PathData[] = [
       {
         heading: "AI-Driven Development Workflow",
         items: [
-          "Skilled in leveraging AI tools (Claude) to accelerate development cycles and solve complex problems.",
+          "Skilled in leveraging AI tools (Claude) to accelerate development cycles and solve complex technical problems.",
           "Uses AI as an integrator — maintaining full understanding of the code produced and shipped.",
         ],
       },
@@ -257,7 +255,7 @@ const PATHS: PathData[] = [
         heading: "Reliability & Discipline",
         items: [
           "Consistent performance record with zero incidents across all assigned shifts.",
-          "Recognized for punctuality, professional grooming, and adherence to post orders and company protocols.",
+          "Recognized for punctuality, professional grooming, and strict adherence to post orders and company protocols.",
         ],
       },
     ],
@@ -299,68 +297,76 @@ const PATHS: PathData[] = [
 ];
 
 const TIMELINE = [
-  { date: "Jan 2026 – May 2026", title: "Housekeeping NC II Training", org: "TESDA", tag: "Hospitality", color: "bg-amber-400" },
+  { date: "Jan 2026 – May 2026", title: "Housekeeping NC II Certification", org: "TESDA", tag: "Hospitality", color: "bg-amber-400" },
   { date: "Dec 2025", title: "Certificate in Financial Literacy", org: "TESDA", tag: "Certification", color: "bg-emerald-400" },
   { date: "Aug 2024 – May 2025", title: "High School Diploma", org: "Grant Cecilia Integrated School", tag: "Education", color: "bg-sky-400" },
   { date: "Aug 2024 – Present", title: "Security Guard", org: "C6 Lakeside, Taguig City", tag: "Service", color: "bg-violet-400" },
 ];
 
-function ResumeViewer({ path }: { path: PathData }) {
+/* ─── Paper-style resume document rendered as bond-paper pages ─── */
+function ResumeDocument({ path }: { path: PathData }) {
   return (
-    <div className="bg-white text-gray-900 rounded-2xl shadow-2xl overflow-hidden font-sans" style={{ fontFamily: "'Georgia', serif" }}>
-      {/* Resume Header */}
-      <div className="bg-[#1a2a4a] text-white px-10 py-8">
-        <h1 className="text-3xl font-bold tracking-wide mb-1">{PERSONAL_DATA.name.toUpperCase()}</h1>
-        <p className="text-blue-300 text-sm font-sans tracking-widest uppercase mb-4">{path.label}</p>
-        <div className="flex flex-wrap gap-4 text-xs font-sans text-blue-200">
-          <span>{PERSONAL_DATA.location}</span>
-          <span>|</span>
-          <span>{PERSONAL_DATA.email}</span>
-          <span>|</span>
-          <span>{PERSONAL_DATA.phone}</span>
+    <div style={{ fontFamily: "'Times New Roman', Georgia, serif" }}>
+      {/* PAGE 1 */}
+      <div className="resume-page bg-white text-gray-900 w-full" style={{ padding: "0.55in 0.65in", minHeight: "10.5in", boxSizing: "border-box" }}>
+        {/* Header */}
+        <div style={{ borderBottom: "3px solid #1a2a4a", paddingBottom: "10px", marginBottom: "14px" }}>
+          <h1 style={{ fontSize: "26pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", margin: "0 0 2px 0", textTransform: "uppercase" }}>
+            {PERSONAL_DATA.name}
+          </h1>
+          <p style={{ fontSize: "10pt", color: "#2a5298", fontFamily: "Arial, sans-serif", letterSpacing: "1.5px", textTransform: "uppercase", margin: "0 0 6px 0" }}>
+            {path.label}
+          </p>
+          <div style={{ fontSize: "9.5pt", color: "#444", fontFamily: "Arial, sans-serif", display: "flex", gap: "16px", flexWrap: "wrap" }}>
+            <span>{PERSONAL_DATA.location}</span>
+            <span>|</span>
+            <span>{PERSONAL_DATA.email}</span>
+            <span>|</span>
+            <span>{PERSONAL_DATA.phone}</span>
+          </div>
         </div>
-      </div>
 
-      <div className="px-10 py-8 space-y-6">
         {/* Profile */}
-        <div>
-          <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Profile</h2>
-          <p className="text-sm leading-relaxed text-gray-700">{path.profile}</p>
+        <div style={{ marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "7px", fontFamily: "Arial, sans-serif" }}>
+            Profile
+          </h2>
+          <p style={{ fontSize: "10.5pt", lineHeight: "1.55", color: "#222", margin: 0 }}>{path.profile}</p>
         </div>
 
         {/* Accomplishments */}
-        <div>
-          <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Key Accomplishments</h2>
-          <div className="space-y-3">
-            {path.accomplishments.map((section, i) => (
-              <div key={i}>
-                <p className="text-sm font-bold text-gray-800">{section.heading}:</p>
-                {section.items.map((item, j) => (
-                  <p key={j} className="text-sm text-gray-700 ml-3 mt-0.5">{item}</p>
-                ))}
-              </div>
-            ))}
-          </div>
+        <div style={{ marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
+            Key Accomplishments
+          </h2>
+          {path.accomplishments.map((section, i) => (
+            <div key={i} style={{ marginBottom: "8px" }}>
+              <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: "0 0 2px 0" }}>{section.heading}:</p>
+              {section.items.map((item, j) => (
+                <p key={j} style={{ fontSize: "10.5pt", color: "#333", margin: "0 0 1px 14px", lineHeight: "1.5" }}>{item}</p>
+              ))}
+            </div>
+          ))}
         </div>
 
         {/* Experience */}
         {path.experience.length > 0 && (
-          <div>
-            <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">
+          <div style={{ marginBottom: "14px" }}>
+            <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
               {path.id === "housekeeping" ? "Additional Experience" : "Professional Experience"}
             </h2>
             {path.experience.map((exp, i) => (
-              <div key={i} className="mb-3">
-                <div className="flex justify-between items-start">
-                  <p className="text-sm font-bold text-gray-900">{exp.role}, {exp.company}</p>
-                  <p className="text-xs text-gray-600 font-sans whitespace-nowrap ml-4">{exp.date}</p>
+              <div key={i} style={{ marginBottom: "8px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{exp.role}, {exp.company}</p>
+                  <p style={{ fontSize: "10pt", color: "#555", margin: 0, fontFamily: "Arial, sans-serif", whiteSpace: "nowrap", marginLeft: "12px" }}>{exp.date}</p>
                 </div>
                 {exp.bullets && (
-                  <ul className="mt-1 space-y-1">
+                  <div style={{ marginTop: "4px" }}>
                     {exp.bullets.map((b, j) => (
-                      <li key={j} className="text-sm text-gray-700 ml-3 before:content-['•'] before:mr-2 before:text-gray-400">{b}</li>
+                      <p key={j} style={{ fontSize: "10.5pt", color: "#333", margin: "0 0 2px 14px", lineHeight: "1.5" }}>• {b}</p>
                     ))}
-                  </ul>
+                  </div>
                 )}
               </div>
             ))}
@@ -369,72 +375,115 @@ function ResumeViewer({ path }: { path: PathData }) {
 
         {/* Projects (Tech only) */}
         {path.projects && (
-          <div>
-            <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Projects</h2>
+          <div style={{ marginBottom: "14px" }}>
+            <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
+              Projects
+            </h2>
             {path.projects.map((proj, i) => (
-              <div key={i} className="mb-2">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-bold text-gray-900">{proj.title}</p>
-                  <span className="text-xs text-gray-500">— {proj.tags.join(", ")}</span>
+              <div key={i} style={{ marginBottom: "7px" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                  <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{proj.title}</p>
+                  <p style={{ fontSize: "9.5pt", color: "#777", margin: 0, fontFamily: "Arial, sans-serif" }}>— {proj.tags.join(", ")}</p>
                 </div>
-                <p className="text-sm text-gray-700 ml-3">{proj.description}</p>
+                <p style={{ fontSize: "10.5pt", color: "#333", margin: "2px 0 0 14px", lineHeight: "1.5" }}>{proj.description}</p>
               </div>
             ))}
           </div>
         )}
 
         {/* Areas of Expertise */}
-        <div>
-          <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Areas of Expertise</h2>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-1">
+        <div style={{ marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
+            Areas of Expertise
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2px 24px" }}>
             {path.expertise.map((skill, i) => (
-              <p key={i} className="text-sm text-gray-700 before:content-['•'] before:mr-2 before:text-[#1a2a4a]">{skill}</p>
+              <p key={i} style={{ fontSize: "10.5pt", color: "#333", margin: 0 }}>• {skill}</p>
             ))}
           </div>
         </div>
 
-        {/* Training (Housekeeping only) */}
-        {path.training && (
-          <div>
-            <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Professional Training</h2>
-            {path.training.map((t, i) => (
-              <div key={i} className="flex justify-between">
-                <p className="text-sm font-bold text-gray-900">{t.name}, {t.school}</p>
-                <p className="text-xs text-gray-600 font-sans">{t.date}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
         {/* Education */}
-        <div>
-          <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Education</h2>
+        <div style={{ marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
+            Education
+          </h2>
           {path.education.map((edu, i) => (
-            <div key={i} className="flex justify-between">
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "4px" }}>
               <div>
-                <p className="text-sm font-bold text-gray-900">{edu.school}</p>
-                <p className="text-sm text-gray-600">{edu.degree}</p>
+                <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{edu.school}</p>
+                <p style={{ fontSize: "10.5pt", color: "#555", margin: 0 }}>{edu.degree}</p>
               </div>
-              <p className="text-xs text-gray-600 font-sans whitespace-nowrap ml-4">{edu.date}</p>
+              <p style={{ fontSize: "10pt", color: "#555", margin: 0, fontFamily: "Arial, sans-serif", whiteSpace: "nowrap", marginLeft: "12px" }}>{edu.date}</p>
             </div>
           ))}
         </div>
 
-        {/* Certifications */}
-        <div>
-          <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Licenses & Certifications</h2>
+        {/* Licenses & Certifications */}
+        <div style={{ marginBottom: "14px" }}>
+          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
+            Licenses & Certifications
+          </h2>
           {path.certifications.map((cert, i) => (
-            <div key={i} className="flex justify-between">
-              <p className="text-sm font-bold text-gray-900">{cert.name}, {cert.issuer}</p>
-              <p className="text-xs text-gray-600 font-sans">{cert.date}</p>
+            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "4px" }}>
+              <p style={{ fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: 0 }}>{cert.name}, {cert.issuer}</p>
+              <p style={{ fontSize: "10pt", color: "#555", margin: 0, fontFamily: "Arial, sans-serif", whiteSpace: "nowrap", marginLeft: "12px" }}>{cert.date}</p>
             </div>
           ))}
         </div>
 
         {/* Languages */}
         <div>
-          <h2 className="text-xs font-sans font-bold tracking-widest text-[#1a2a4a] uppercase border-b-2 border-[#1a2a4a] pb-1 mb-3">Languages</h2>
-          <p className="text-sm text-gray-700">{path.languages.join(", ")}</p>
+          <h2 style={{ fontSize: "9.5pt", fontWeight: "700", color: "#1a2a4a", letterSpacing: "2px", textTransform: "uppercase", borderBottom: "1.5px solid #1a2a4a", paddingBottom: "3px", marginBottom: "8px", fontFamily: "Arial, sans-serif" }}>
+            Languages
+          </h2>
+          <p style={{ fontSize: "10.5pt", color: "#333", margin: 0 }}>{path.languages.join(", ")}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Hidden print portal — only rendered during window.print() */
+function PrintPortal({ path }: { path: PathData }) {
+  return createPortal(
+    <div id="resume-print-root" style={{ display: "none" }}>
+      <ResumeDocument path={path} />
+    </div>,
+    document.body
+  );
+}
+
+/* On-screen paper preview with desk background */
+function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }) {
+  return (
+    <div>
+      {/* Toolbar */}
+      <div className="no-print flex items-center justify-between mb-4 px-2">
+        <p className="text-xs font-mono text-muted-foreground">
+          {path.label} — Resume Preview
+        </p>
+        <button
+          data-testid="button-print"
+          onClick={onPrint}
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+        >
+          <Printer className="w-4 h-4" />
+          Print / Save as PDF
+        </button>
+      </div>
+
+      {/* Desk background — gray */}
+      <div className="rounded-xl overflow-hidden" style={{ background: "#525659", padding: "32px 24px" }}>
+        {/* Paper shadow wrapper */}
+        <div
+          className="mx-auto"
+          style={{
+            maxWidth: "816px",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3)",
+          }}
+        >
+          <ResumeDocument path={path} />
         </div>
       </div>
     </div>
@@ -455,8 +504,15 @@ export default function Home() {
     }, 50);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+
+      {/* Print portal — invisible until print dialog opens */}
+      <PrintPortal path={activePathData} />
 
       {/* ─── HERO ─── */}
       <section className="relative min-h-[100dvh] flex flex-col justify-center px-6 md:px-12 lg:px-24 py-20 border-b border-border/40">
@@ -558,7 +614,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Toggle: Summary / Resume View */}
+          {/* Toggle: Overview / Resume View */}
           <div className="flex items-center gap-3 mb-10 pt-6 border-t border-border/40">
             <button
               onClick={() => setShowResume(false)}
@@ -584,9 +640,8 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.35 }}
-                className="max-w-4xl mx-auto"
               >
-                <ResumeViewer path={activePathData} />
+                <ResumeViewer path={activePathData} onPrint={handlePrint} />
               </motion.div>
             ) : (
               <motion.div
@@ -601,7 +656,7 @@ export default function Home() {
                 <div className="lg:col-span-2 space-y-10">
                   <div>
                     <h2 className="text-2xl font-bold mb-4 text-foreground">Professional Profile</h2>
-                    <p className={`text-muted-foreground leading-relaxed bg-secondary/40 p-6 rounded-xl border border-border/50 text-base`}>
+                    <p className="text-muted-foreground leading-relaxed bg-secondary/40 p-6 rounded-xl border border-border/50 text-base">
                       {activePathData.profile}
                     </p>
                   </div>
@@ -626,7 +681,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Experience */}
                   {activePathData.experience.length > 0 && (
                     <div>
                       <h3 className="text-xl font-bold mb-5 flex items-center gap-3">
@@ -657,7 +711,6 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* Projects (Tech) */}
                   {activePathData.projects && (
                     <div>
                       <h3 className="text-xl font-bold mb-5 flex items-center gap-3">
@@ -696,19 +749,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {activePathData.training && (
-                    <div className="bg-secondary/30 border border-border/50 rounded-xl p-6">
-                      <h4 className={`font-mono text-sm font-bold mb-4 ${activePathData.accentColor}`}>Professional Training</h4>
-                      {activePathData.training.map((t, i) => (
-                        <div key={i}>
-                          <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                          <p className="text-xs text-muted-foreground">{t.school}</p>
-                          <p className="text-xs font-mono text-muted-foreground mt-1">{t.date}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
                   <div className="bg-secondary/30 border border-border/50 rounded-xl p-6">
                     <h4 className={`font-mono text-sm font-bold mb-4 ${activePathData.accentColor}`}>Education</h4>
                     {activePathData.education.map((edu, i) => (
@@ -721,14 +761,14 @@ export default function Home() {
                   </div>
 
                   <div className="bg-secondary/30 border border-border/50 rounded-xl p-6">
-                    <h4 className={`font-mono text-sm font-bold mb-4 ${activePathData.accentColor}`}>Certifications</h4>
+                    <h4 className={`font-mono text-sm font-bold mb-4 ${activePathData.accentColor}`}>Licenses & Certifications</h4>
                     {activePathData.certifications.map((cert, i) => (
-                      <div key={i} className="flex justify-between items-start">
+                      <div key={i} className="flex justify-between items-start mb-2 last:mb-0">
                         <div>
                           <p className="text-sm font-semibold text-foreground">{cert.name}</p>
                           <p className="text-xs text-muted-foreground">{cert.issuer}</p>
                         </div>
-                        <span className="text-xs font-mono text-muted-foreground">{cert.date}</span>
+                        <span className="text-xs font-mono text-muted-foreground whitespace-nowrap ml-3">{cert.date}</span>
                       </div>
                     ))}
                   </div>
@@ -765,7 +805,6 @@ export default function Home() {
 
           <div className="relative">
             <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
-
             <div className="space-y-12">
               {TIMELINE.map((item, i) => (
                 <motion.div
@@ -777,7 +816,6 @@ export default function Home() {
                   className="relative pl-16 md:pl-0"
                 >
                   <div className={`absolute left-4 md:left-1/2 md:-translate-x-1/2 w-5 h-5 rounded-full ${item.color} shadow-lg mt-1.5 -translate-x-0.5 ring-4 ring-background`} />
-
                   <div className={`md:w-[43%] ${i % 2 === 0 ? "md:ml-auto md:pl-12" : "md:mr-auto md:pr-12 md:text-right"}`}>
                     <p className="text-primary font-mono text-xs mb-1">{item.date}</p>
                     <h4 className="text-lg font-bold text-foreground">{item.title}</h4>
@@ -826,7 +864,7 @@ export default function Home() {
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-4">View Resumes</h3>
+                <h3 className="text-lg font-semibold mb-4">View & Print Resumes</h3>
                 <div className="space-y-3">
                   {PATHS.map(path => {
                     const Icon = path.icon;
@@ -834,15 +872,19 @@ export default function Home() {
                       <button
                         key={path.id}
                         data-testid={`button-view-${path.id}`}
-                        onClick={() => { setActivePath(path.id); setShowResume(true); scrollToSection("path-selector"); }}
+                        onClick={() => {
+                          setActivePath(path.id);
+                          setShowResume(true);
+                          scrollToSection("path-selector");
+                        }}
                         className="w-full flex items-center gap-4 p-4 rounded-xl border border-border/50 bg-secondary/20 hover:border-primary/40 hover:bg-secondary/40 transition-all group text-left"
                       >
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center border border-border group-hover:border-primary/40 transition-colors`}>
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center border border-border group-hover:border-primary/40 transition-colors">
                           <Icon className={`w-5 h-5 ${path.accentColor}`} />
                         </div>
                         <div className="flex-1">
                           <p className="font-semibold text-foreground text-sm">{path.label}</p>
-                          <p className="text-xs text-muted-foreground font-mono mt-0.5">View on site</p>
+                          <p className="text-xs text-muted-foreground font-mono mt-0.5">View on site & print as PDF</p>
                         </div>
                         <FileText className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                       </button>
