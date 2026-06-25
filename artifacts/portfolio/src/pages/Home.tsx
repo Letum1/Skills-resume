@@ -678,6 +678,7 @@ export default function Home() {
   const [formName, setFormName] = useState("");
   const [formSubject, setFormSubject] = useState("");
   const [formMsg, setFormMsg] = useState("");
+  const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const activePathData = PATHS.find(p => p.id === activePath) ?? PATHS[0];
 
@@ -691,11 +692,26 @@ export default function Home() {
 
   const handlePrint = () => { window.print(); };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(formSubject || "Message from Portfolio");
-    const body = encodeURIComponent(`From: ${formName}\n\n${formMsg}`);
-    window.location.href = `mailto:princeclyde80@gmail.com?subject=${subject}&body=${body}`;
+    setFormStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: formName, subject: formSubject, message: formMsg }),
+      });
+      if (res.ok) {
+        setFormStatus("sent");
+        setFormName("");
+        setFormSubject("");
+        setFormMsg("");
+      } else {
+        setFormStatus("error");
+      }
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   return (
@@ -1148,7 +1164,7 @@ export default function Home() {
             <Card className="bg-background border-border">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
-                <CardDescription>Opens your email app with your message pre-filled.</CardDescription>
+                <CardDescription>Fill in the form and I'll receive it directly in my inbox.</CardDescription>
               </CardHeader>
               <CardContent>
                 <form className="space-y-5" onSubmit={handleSendMessage}>
@@ -1182,8 +1198,14 @@ export default function Home() {
                       onChange={e => setFormMsg(e.target.value)}
                     />
                   </div>
-                  <Button data-testid="button-submit" type="submit" className="w-full h-12 text-base">
-                    <Mail className="w-4 h-4 mr-2" /> Send via Email App
+                  {formStatus === "sent" && (
+                    <p className="text-sm text-emerald-400 font-medium text-center py-2">✓ Message sent! I'll get back to you soon.</p>
+                  )}
+                  {formStatus === "error" && (
+                    <p className="text-sm text-red-400 font-medium text-center py-2">Something went wrong. Try emailing directly: princeclyde80@gmail.com</p>
+                  )}
+                  <Button data-testid="button-submit" type="submit" disabled={formStatus === "sending" || formStatus === "sent"} className="w-full h-12 text-base">
+                    <Mail className="w-4 h-4 mr-2" /> {formStatus === "sending" ? "Sending..." : formStatus === "sent" ? "Sent!" : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
