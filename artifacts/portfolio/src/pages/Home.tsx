@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid } from "lucide-react";
+import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +16,7 @@ const PERSONAL_DATA = {
   languages: ["English", "Tagalog"],
 };
 
-type PathId = "housekeeping" | "tech" | "security" | "all";
+type PathId = "housekeeping" | "tech" | "security" | "finance" | "all";
 
 interface ResumeSection {
   heading: string;
@@ -285,6 +285,84 @@ const PATHS: PathData[] = [
           "Deliver customer-facing services professionally, handling inquiries and resolving issues daily.",
           "Maintained precise logs of high-volume digital and physical transactions, ensuring 100% accountability and zero discrepancies.",
           "Applied financial literacy and budgeting principles to support cost-control measures and resource management across daily operations.",
+        ],
+      },
+    ],
+    education: [
+      {
+        degree: "High School Diploma",
+        school: "Grant Cecilia Integrated School, Taguig City",
+        date: "Aug 2024 – May 2025",
+      },
+    ],
+    certifications: [
+      { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
+    ],
+    languages: ["English", "Tagalog"],
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
+  },
+];
+
+  {
+    id: "finance",
+    label: "Finance & Budgeting",
+    icon: TrendingUp,
+    accentColor: "text-emerald-400",
+    tagBg: "bg-emerald-400/10 text-emerald-400 border-emerald-400/30",
+    profile:
+      "A financially literate and detail-oriented professional with formal training in personal finance, budgeting, and asset management through the BDO Foundation. Skilled in applying sound financial principles to real-world operational settings — including inventory cost control, resource allocation, and budget tracking. Brings a disciplined, accuracy-focused mindset and a strong commitment to financial accountability, well-suited for entry-level finance, accounting support, or administrative roles.",
+    accomplishments: [
+      {
+        heading: "Budgeting & Cost Management",
+        items: [
+          "Trained in creating and managing personal and operational budgets to maximize resource efficiency and minimize unnecessary expenditure.",
+          "Applied budgeting principles in daily operations to track spending, identify cost-saving opportunities, and maintain financial discipline.",
+        ],
+      },
+      {
+        heading: "Asset & Inventory Management",
+        items: [
+          "Practiced systematic tracking and valuation of assets and supplies to ensure accurate accountability and zero discrepancies.",
+          "Reduced operational waste by implementing structured inventory monitoring aligned with financial targets.",
+        ],
+      },
+      {
+        heading: "Financial Record-Keeping & Reporting",
+        items: [
+          "Maintained precise logs of high-volume digital and physical transactions, ensuring 100% accountability across all recorded entries.",
+          "Demonstrates strong attention to detail and accuracy in financial documentation and report generation.",
+        ],
+      },
+      {
+        heading: "Savings & Investment Awareness",
+        items: [
+          "Knowledgeable in personal savings strategies, investment fundamentals, and the principles of compound growth.",
+          "Understands risk assessment, diversification basics, and the importance of emergency funds in financial planning.",
+        ],
+      },
+    ],
+    expertise: [
+      "Personal Financial Planning",
+      "Budgeting & Cost Management",
+      "Asset & Inventory Management",
+      "Financial Record-Keeping",
+      "Resource Allocation",
+      "Waste Reduction & Operational Efficiency",
+      "Savings & Investment Basics",
+      "Risk Awareness & Assessment",
+      "Report Writing & Documentation",
+      "Attention to Detail & Accuracy",
+    ],
+    experience: [
+      {
+        role: "Security Guard / Operations Staff",
+        company: "C6 Lakeside, Taguig City",
+        date: "Aug 2024 – Present",
+        bullets: [
+          "Maintained precise logs of high-volume digital and physical commercial transactions, ensuring 100% accountability and zero discrepancies.",
+          "Applied financial literacy and budgeting principles to support cost-control measures and resource management across daily operations.",
+          "Tracked and monitored operational supplies, reducing waste through disciplined inventory management aligned with budget goals.",
+          "Demonstrated consistent financial discipline and professional conduct across all assigned responsibilities.",
         ],
       },
     ],
