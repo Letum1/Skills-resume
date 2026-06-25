@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -511,14 +511,38 @@ function PrintPortal({ path }: { path: PathData }) {
   );
 }
 
-/* On-screen paper preview — two pages on a gray desk, each page is letter-sized */
+const PAGE_W = 816;
+const PAGE_H = 1056;
+const PAGE_GAP = 24;
+
+/* On-screen paper preview — two pages on a gray desk, scales to fit screen */
 function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }) {
+  const deskRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const compute = () => {
+      if (!deskRef.current) return;
+      // available width = desk width minus left+right padding (48px total)
+      const available = deskRef.current.clientWidth - 48;
+      setScale(Math.min(1, available / PAGE_W));
+    };
+    compute();
+    const ro = new ResizeObserver(compute);
+    if (deskRef.current) ro.observe(deskRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  // After scaling, each page visually occupies scale*PAGE_H px tall
+  const scaledH = Math.round(scale * PAGE_H);
+  const scaledW = Math.round(scale * PAGE_W);
+
   return (
     <div>
       {/* Toolbar */}
-      <div className="no-print flex items-center justify-between mb-4 px-2">
+      <div className="no-print flex items-center justify-between mb-4 px-2 gap-3 flex-wrap">
         <p className="text-xs font-mono text-muted-foreground">
-          {path.label} — Resume Preview (2 pages)
+          {path.label} — 2-page resume
         </p>
         <button
           data-testid="button-print"
@@ -530,30 +554,44 @@ function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }
         </button>
       </div>
 
-      {/* Desk — gray background, scrollable */}
+      {/* Desk — gray, contains the two scaled paper pages */}
       <div
-        className="rounded-xl overflow-auto"
-        style={{ background: "#525659", padding: "32px 24px" }}
+        ref={deskRef}
+        className="rounded-xl"
+        style={{ background: "#525659", padding: "24px" }}
       >
-        {/* Scale-down wrapper so 816px paper fits on smaller screens */}
         <div
           style={{
-            transformOrigin: "top center",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            gap: "28px",
+            alignItems: "flex-start",
+            gap: `${PAGE_GAP}px`,
           }}
         >
-          {/* Page 1 */}
-          <div style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.3)", lineHeight: 0 }}>
-            <ResumePage1 path={path} />
-          </div>
-
-          {/* Page 2 */}
-          <div style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.3)", lineHeight: 0 }}>
-            <ResumePage2 path={path} />
-          </div>
+          {/* Each page: outer div at scaled dimensions (acts as viewport/clip), inner div scaled */}
+          {[<ResumePage1 key="p1" path={path} />, <ResumePage2 key="p2" path={path} />].map((page, idx) => (
+            <div
+              key={idx}
+              style={{
+                width: `${scaledW}px`,
+                height: `${scaledH}px`,
+                overflow: "hidden",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.3)",
+                flexShrink: 0,
+              }}
+            >
+              <div
+                style={{
+                  transform: `scale(${scale})`,
+                  transformOrigin: "top left",
+                  width: `${PAGE_W}px`,
+                  lineHeight: "normal",
+                }}
+              >
+                {page}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
