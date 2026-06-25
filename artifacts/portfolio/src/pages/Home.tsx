@@ -338,14 +338,30 @@ function ResumePage1({ path }: { path: PathData }) {
         fontFamily: "Arial, sans-serif",
       }}
     >
-      {/* Name & Contact */}
-      <div style={{ marginBottom: "14px" }}>
-        <h1 style={RS.name}>{PERSONAL_DATA.name}</h1>
-        <p style={RS.contact}>
-          {PERSONAL_DATA.location}&nbsp; | &nbsp;
-          <span style={{ color: "#1a3a8c" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
-          {PERSONAL_DATA.phone}
-        </p>
+      {/* Name & Contact — photo floated to top-right */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "14px" }}>
+        <div style={{ flex: 1, paddingRight: "16px" }}>
+          <h1 style={RS.name}>{PERSONAL_DATA.name}</h1>
+          <p style={{ ...RS.contact, marginTop: "4px" }}>{path.label}</p>
+          <p style={{ ...RS.contact, marginTop: "6px" }}>
+            {PERSONAL_DATA.location}&nbsp; | &nbsp;
+            <span style={{ color: "#1a3a8c" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
+            {PERSONAL_DATA.phone}
+          </p>
+        </div>
+        {/* Passport-style photo */}
+        <img
+          src="/clyde-photo.jpg"
+          alt="Clyde Miles Bonita"
+          style={{
+            width: "100px",
+            height: "120px",
+            objectFit: "cover",
+            objectPosition: "center top",
+            border: "2px solid #1a3a8c",
+            flexShrink: 0,
+          }}
+        />
       </div>
 
       {/* Profile */}
