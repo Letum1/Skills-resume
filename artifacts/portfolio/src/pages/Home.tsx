@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp } from "lucide-react";
+import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +16,7 @@ const PERSONAL_DATA = {
   languages: ["English", "Tagalog"],
 };
 
-type PathId = "housekeeping" | "tech" | "security" | "finance" | "all";
+type PathId = "housekeeping" | "tech" | "security" | "finance" | "gaming" | "all";
 
 interface ResumeSection {
   heading: string;
@@ -308,13 +308,20 @@ const PATHS: PathData[] = [
     accentColor: "text-emerald-400",
     tagBg: "bg-emerald-400/10 text-emerald-400 border-emerald-400/30",
     profile:
-      "A financially literate and detail-oriented professional with formal training in personal finance, budgeting, and asset management through the BDO Foundation. Skilled in applying sound financial principles to real-world operational settings — including inventory cost control, resource allocation, and budget tracking. Brings a disciplined, accuracy-focused mindset and a strong commitment to financial accountability, well-suited for entry-level finance, accounting support, or administrative roles.",
+      "A financially literate and digitally aware professional with formal training in personal finance, budgeting, and asset management through the BDO Foundation. Knowledgeable in cryptocurrency markets (Bitcoin, Ethereum), NFT ecosystems, and blockchain technology — applying both traditional financial principles and digital asset awareness to real-world decisions. Brings a disciplined, accuracy-focused mindset suited for entry-level finance, crypto operations support, or financial administrative roles.",
     accomplishments: [
       {
         heading: "Budgeting & Cost Management",
         items: [
           "Trained in creating and managing personal and operational budgets to maximize resource efficiency and minimize unnecessary expenditure.",
           "Applied budgeting principles in daily operations to track spending, identify cost-saving opportunities, and maintain financial discipline.",
+        ],
+      },
+      {
+        heading: "Cryptocurrency & Digital Assets",
+        items: [
+          "Knowledgeable in Bitcoin, Ethereum, and major cryptocurrency markets — including wallet management, trading basics, and market volatility awareness.",
+          "Understands NFT ecosystems, blockchain fundamentals, and the principles of decentralized finance (DeFi) and digital asset valuation.",
         ],
       },
       {
@@ -325,30 +332,25 @@ const PATHS: PathData[] = [
         ],
       },
       {
-        heading: "Financial Record-Keeping & Reporting",
-        items: [
-          "Maintained precise logs of high-volume digital and physical transactions, ensuring 100% accountability across all recorded entries.",
-          "Demonstrates strong attention to detail and accuracy in financial documentation and report generation.",
-        ],
-      },
-      {
         heading: "Savings & Investment Awareness",
         items: [
           "Knowledgeable in personal savings strategies, investment fundamentals, and the principles of compound growth.",
-          "Understands risk assessment, diversification basics, and the importance of emergency funds in financial planning.",
+          "Understands risk assessment, diversification basics, and the importance of balancing traditional and digital asset investments.",
         ],
       },
     ],
     expertise: [
       "Personal Financial Planning",
       "Budgeting & Cost Management",
+      "Cryptocurrency & Bitcoin Knowledge",
+      "NFT & Blockchain Awareness",
+      "Digital Asset Valuation",
       "Asset & Inventory Management",
       "Financial Record-Keeping",
       "Resource Allocation",
-      "Waste Reduction & Operational Efficiency",
       "Savings & Investment Basics",
       "Risk Awareness & Assessment",
-      "Report Writing & Documentation",
+      "Decentralized Finance (DeFi) Basics",
       "Attention to Detail & Accuracy",
     ],
     experience: [
@@ -377,7 +379,190 @@ const PATHS: PathData[] = [
     languages: ["English", "Tagalog"],
     hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
+  {
+    id: "gaming",
+    label: "Game Testing & QA",
+    icon: Gamepad2,
+    accentColor: "text-fuchsia-400",
+    tagBg: "bg-fuchsia-400/10 text-fuchsia-400 border-fuchsia-400/30",
+    profile:
+      "A highly skilled competitive gamer with Top Global and Top Ranking achievements across multiple titles, bringing elite-level game knowledge to the field of game testing and quality assurance. Possesses an exceptionally sharp eye for bugs, glitches, and gameplay inconsistencies developed through thousands of hours of high-level play. Combines precision, rapid pattern recognition, and a deep understanding of game mechanics to deliver thorough, reliable QA feedback in fast-paced development environments.",
+    accomplishments: [
+      {
+        heading: "Elite Competitive Performance",
+        items: [
+          "Achieved Top Global and Top Ranking status across multiple competitive game titles — placing among the highest-rated players on the server.",
+          "Consistently performs at an elite level under pressure, demonstrating exceptional focus, adaptability, and rapid decision-making.",
+        ],
+      },
+      {
+        heading: "Bug Detection & Game Mechanics",
+        items: [
+          "Identifies bugs, exploits, collision errors, and gameplay inconsistencies rapidly through deep familiarity with intended game behavior.",
+          "Experienced in spotting graphical glitches, UI/UX issues, input lag, and balance anomalies across PC and mobile platforms.",
+        ],
+      },
+      {
+        heading: "Strategic Analysis & Pattern Recognition",
+        items: [
+          "Analyzes game systems, meta shifts, and design decisions with a critical eye honed through competitive high-level play.",
+          "Capable of documenting and clearly communicating issues — including reproduction steps, expected vs actual behavior.",
+        ],
+      },
+      {
+        heading: "Platform & Genre Versatility",
+        items: [
+          "Experienced across multiple genres including battle royale, MOBA, RPG, and strategy — bringing broad platform knowledge to QA testing.",
+          "Knowledgeable in both mobile and PC gaming ecosystems, including performance optimization and cross-platform behavior differences.",
+        ],
+      },
+    ],
+    expertise: [
+      "Game Testing & Quality Assurance",
+      "Bug Reporting & Documentation",
+      "Game Mechanics Analysis",
+      "Competitive Gaming (Top Global / Top Ranked)",
+      "UI/UX Issue Identification",
+      "Strategic Thinking & Decision Making",
+      "High Reaction Time & Precision",
+      "Team Communication & Coordination",
+      "Attention to Detail",
+      "PC & Mobile Platform Knowledge",
+      "Pattern Recognition",
+      "Game Balance & Meta Awareness",
+    ],
+    experience: [
+      {
+        role: "Top Global / Top Ranked Competitive Gamer",
+        company: "Self — Multiple Titles",
+        date: "2020 – Present",
+        bullets: [
+          "Achieved Top Global and Top Ranking status across multiple competitive titles, placing among the highest-rated players on the server.",
+          "Developed elite-level pattern recognition and rapid decision-making through thousands of hours of high-stakes competitive play.",
+          "Identified and documented recurring bugs, exploits, and gameplay inconsistencies across multiple game updates and patches.",
+          "Collaborated with online teams and communities to analyze game balance, share findings, and coordinate strategic responses.",
+        ],
+      },
+      {
+        role: "Security Guard",
+        company: "C6 Lakeside, Taguig City",
+        date: "Aug 2024 – Present",
+        bullets: [
+          "Demonstrated sharp attention to detail and pattern recognition in monitoring high-traffic environments.",
+          "Maintained incident logs with precise documentation — a skill directly transferable to QA bug reporting.",
+        ],
+      },
+    ],
+    education: [
+      {
+        degree: "High School Diploma",
+        school: "Grant Cecilia Integrated School, Taguig City",
+        date: "Aug 2024 – May 2025",
+      },
+    ],
+    certifications: [
+      { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
+    ],
+    languages: ["English", "Tagalog"],
+    hobbies: "Competitive Gaming (Top Global), Cardio Exercise, Making Websites",
+  },
 ];
+
+const ALL_IN_ONE_PATH: PathData = {
+  id: "all",
+  label: "All-in-One Resume",
+  icon: LayoutGrid,
+  accentColor: "text-primary",
+  tagBg: "bg-primary/10 text-primary border-primary/30",
+  profile:
+    "A versatile, multi-skilled professional combining formal certifications and hands-on expertise across five distinct domains: luxury housekeeping & hospitality, customer service & security operations, financial literacy & digital assets (Bitcoin, NFT, DeFi), full-stack web development, and elite-level competitive gaming. Brings a disciplined work ethic, sharp attention to detail, rapid adaptability, and a proven track record of excellence across every field pursued.",
+  accomplishments: [
+    {
+      heading: "Hospitality & Housekeeping (TESDA NC II)",
+      items: [
+        "Certified in 5-star luxury housekeeping standards — room inspection, chemical safety, linen management, and high-volume guest service.",
+        "Skilled in turndown service, deep cleaning, and maintaining premium brand presentation in fast-paced hospitality environments.",
+      ],
+    },
+    {
+      heading: "Finance, Crypto & Digital Assets",
+      items: [
+        "BDO Foundation certified in financial literacy, budgeting, asset management, and personal financial planning.",
+        "Knowledgeable in Bitcoin, Ethereum, NFTs, blockchain fundamentals, and decentralized finance (DeFi) principles.",
+      ],
+    },
+    {
+      heading: "Technology & Web Development",
+      items: [
+        "Self-taught full-stack developer proficient in React, Vite, TypeScript, Tailwind CSS, and cloud deployment on Vercel.",
+        "Skilled in AI-assisted development workflows (Claude), Git/GitHub version control, and shipping production web applications.",
+      ],
+    },
+    {
+      heading: "Competitive Gaming & Game QA",
+      items: [
+        "Top Global and Top Ranked competitive gamer with elite-level knowledge of game mechanics, bug detection, and platform behavior.",
+        "Capable of thorough QA documentation including bug reproduction steps, expected vs actual behavior, and UI/UX issue reporting.",
+      ],
+    },
+    {
+      heading: "Security & Customer Service",
+      items: [
+        "100% safety record in access control, patrol operations, and professional public-facing service at C6 Lakeside, Taguig City.",
+        "Strong conflict-resolution, incident documentation, and operational discipline skills developed through active field experience.",
+      ],
+    },
+  ],
+  expertise: [
+    "Housekeeping NC II (TESDA Certified)",
+    "5-Star Guest Service & Hospitality",
+    "Financial Literacy & Budgeting (BDO)",
+    "Cryptocurrency, Bitcoin & NFT Knowledge",
+    "Full-Stack Web Development (React/Vite)",
+    "AI-Assisted Development (Claude)",
+    "Game Testing & QA",
+    "Competitive Gaming (Top Global/Ranked)",
+    "Security & Access Control",
+    "Conflict Resolution & De-escalation",
+    "Inventory Control & Resource Management",
+    "Financial Record-Keeping & Reporting",
+  ],
+  experience: [
+    {
+      role: "Security Guard / Operations Staff",
+      company: "C6 Lakeside, Taguig City",
+      date: "Aug 2024 – Present",
+      bullets: [
+        "Maintained 100% safety record by enforcing strict access control protocols for all personnel and visitors.",
+        "Delivered professional customer-facing service, handling inquiries and resolving conflicts daily in a high-volume environment.",
+        "Applied financial literacy principles to support cost-control, inventory tracking, and operational budget alignment.",
+        "Maintained precise logs of digital and physical transactions with 100% accountability and zero discrepancies.",
+      ],
+    },
+    {
+      role: "Top Global / Top Ranked Competitive Gamer",
+      company: "Self — Multiple Titles",
+      date: "2020 – Present",
+      bullets: [
+        "Achieved Top Global and Top Ranking status across multiple titles — placing among the highest-rated players on server.",
+        "Identified and documented bugs, exploits, and gameplay inconsistencies across multiple updates and platforms.",
+      ],
+    },
+  ],
+  education: [
+    {
+      degree: "High School Diploma",
+      school: "Grant Cecilia Integrated School, Taguig City",
+      date: "Aug 2024 – May 2025",
+    },
+  ],
+  certifications: [
+    { name: "Housekeeping NC II", issuer: "TESDA", date: "Jan 2026 – May 2026" },
+    { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
+  ],
+  languages: ["English", "Tagalog"],
+  hobbies: "Competitive Gaming (Top Global), Cardio Exercise, Making Websites",
+};
 
 const TIMELINE = [
   { date: "Jan 2026 – May 2026", title: "Housekeeping NC II Certification", org: "TESDA", tag: "Hospitality", color: "bg-amber-400" },
@@ -606,62 +791,9 @@ function PrintPortal({ path }: { path: PathData }) {
   );
 }
 
-/* All-paths resume viewer — shows all 3 resumes (6 pages) on the gray desk */
+/* All-paths resume viewer — single combined all-in-one 2-page resume */
 function AllPathsResumeViewer({ onPrint }: { onPrint: () => void }) {
-  const deskRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
-
-  useEffect(() => {
-    const compute = () => {
-      if (!deskRef.current) return;
-      const available = deskRef.current.clientWidth - 48;
-      setScale(Math.min(1, available / PAGE_W));
-    };
-    compute();
-    const ro = new ResizeObserver(compute);
-    if (deskRef.current) ro.observe(deskRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  const scaledH = Math.round(scale * PAGE_H);
-  const scaledW = Math.round(scale * PAGE_W);
-
-  const allPages = PATHS.flatMap(path => [
-    { key: `${path.id}-p1`, label: path.label, el: <ResumePage1 path={path} /> },
-    { key: `${path.id}-p2`, label: null, el: <ResumePage2 path={path} /> },
-  ]);
-
-  return (
-    <div>
-      <div className="no-print flex items-center justify-between mb-4 px-2 gap-3 flex-wrap">
-        <p className="text-xs font-mono text-muted-foreground">All Paths — 6-page resume</p>
-        <button
-          onClick={onPrint}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
-        >
-          <Printer className="w-4 h-4" /> Print / Save as PDF
-        </button>
-      </div>
-      <div ref={deskRef} className="rounded-xl" style={{ background: "#525659", padding: "24px" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "20px" }}>
-          {allPages.map(({ key, label, el }) => (
-            <div key={key} style={{ display: "flex", flexDirection: "column", gap: "8px", width: `${scaledW}px` }}>
-              {label && (
-                <p style={{ color: "#d4d4d4", fontFamily: "monospace", fontSize: "11px", textTransform: "uppercase", letterSpacing: "1px" }}>
-                  ── {label}
-                </p>
-              )}
-              <div style={{ width: `${scaledW}px`, height: `${scaledH}px`, overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.55)" }}>
-                <div style={{ transform: `scale(${scale})`, transformOrigin: "top left", width: `${PAGE_W}px`, lineHeight: "normal" }}>
-                  {el}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <ResumeViewer path={ALL_IN_ONE_PATH} onPrint={onPrint} />;
 }
 
 const PAGE_W = 816;
@@ -883,6 +1015,15 @@ export default function Home() {
               data-testid="button-finance"
             >
               <TrendingUp className="w-4 h-4 mr-2" /> ₱ Finance Resume
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => scrollToSection("path-selector", "gaming")}
+              className="font-semibold tracking-wide border-fuchsia-400/50 text-fuchsia-400 hover:bg-fuchsia-400/10"
+              data-testid="button-gaming"
+            >
+              <Gamepad2 className="w-4 h-4 mr-2" /> Game Testing & QA
             </Button>
           </div>
         </motion.div>
