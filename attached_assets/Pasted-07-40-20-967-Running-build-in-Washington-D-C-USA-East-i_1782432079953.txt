@@ -1,0 +1,45 @@
+07:40:20.967 Running build in Washington, D.C., USA (East) – iad1
+07:40:20.968 Build machine configuration: 2 cores, 8 GB
+07:40:20.982 Cloning github.com/Letum1/Skills-resume (Branch: main, Commit: 7f96f02)
+07:40:20.984 Skipping build cache, deployment was triggered without cache.
+07:40:21.614 Cloning completed: 632.000ms
+07:40:21.983 Running "vercel build"
+07:40:22.000 Vercel CLI 54.17.2
+07:40:22.640 Installing dependencies...
+07:40:33.384 
+07:40:33.384 added 229 packages in 11s
+07:40:33.385 
+07:40:33.385 23 packages are looking for funding
+07:40:33.385   run `npm fund` for details
+07:40:34.211 
+07:40:34.212 > @workspace/portfolio@0.0.0 build
+07:40:34.212 > vite build --config vite.config.ts
+07:40:34.212 
+07:40:34.627 vite v7.3.6 building client environment for production...
+07:40:34.704 transforming...
+07:40:35.225 ✓ 15 modules transformed.
+07:40:35.226 ✗ Build failed in 573ms
+07:40:35.227 error during build:
+07:40:35.227 [vite:esbuild] Transform failed with 1 error:
+07:40:35.227 /vercel/path0/artifacts/portfolio/src/pages/Home.tsx:308:9: ERROR: Expected ";" but found ":"
+07:40:35.227 file: /vercel/path0/artifacts/portfolio/src/pages/Home.tsx:308:9
+07:40:35.228 
+07:40:35.228 Expected ";" but found ":"
+07:40:35.228 306 |    {
+07:40:35.228 307 |      id: "finance",
+07:40:35.228 308 |      label: "Finance & Budgeting",
+07:40:35.228     |           ^
+07:40:35.229 309 |      icon: TrendingUp,
+07:40:35.229 310 |      accentColor: "text-emerald-400",
+07:40:35.229 
+07:40:35.229     at failureErrorWithLog (/vercel/path0/artifacts/portfolio/node_modules/esbuild/lib/main.js:1748:15)
+07:40:35.229     at /vercel/path0/artifacts/portfolio/node_modules/esbuild/lib/main.js:1017:50
+07:40:35.229     at responseCallbacks.<computed> (/vercel/path0/artifacts/portfolio/node_modules/esbuild/lib/main.js:884:9)
+07:40:35.230     at handleIncomingPacket (/vercel/path0/artifacts/portfolio/node_modules/esbuild/lib/main.js:939:12)
+07:40:35.230     at Socket.readFromStdout (/vercel/path0/artifacts/portfolio/node_modules/esbuild/lib/main.js:862:7)
+07:40:35.230     at Socket.emit (node:events:509:28)
+07:40:35.230     at addChunk (node:internal/streams/readable:563:12)
+07:40:35.230     at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+07:40:35.230     at Readable.push (node:internal/streams/readable:394:5)
+07:40:35.230     at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+07:40:35.262 Error: Command "npm run build" exited with 1

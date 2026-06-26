@@ -301,8 +301,6 @@ const PATHS: PathData[] = [
     languages: ["English", "Tagalog"],
     hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
-];
-
   {
     id: "finance",
     label: "Finance & Budgeting",
