@@ -848,7 +848,7 @@ export default function Home() {
             <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-primary" />{PERSONAL_DATA.phone}</div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4">
             <Button
               size="lg"
               onClick={() => scrollToSection("path-selector", "housekeeping")}
@@ -874,6 +874,15 @@ export default function Home() {
               data-testid="button-security"
             >
               <Shield className="w-4 h-4 mr-2" /> Customer Service Resume
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => scrollToSection("path-selector", "finance")}
+              className="font-semibold tracking-wide border-emerald-400/50 text-emerald-400 hover:bg-emerald-400/10"
+              data-testid="button-finance"
+            >
+              <TrendingUp className="w-4 h-4 mr-2" /> ₱ Finance Resume
             </Button>
           </div>
         </motion.div>
