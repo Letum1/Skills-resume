@@ -1170,7 +1170,7 @@ export default function Home() {
                 {/* Left: Main Content */}
                 <div className="lg:col-span-2 space-y-10">
                   <div>
-                    <h2 className="text-2xl font-bold mb-4 text-foreground">Professional Profile</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-foreground">{activePathData.label} — Profile</h2>
                     <p className="text-muted-foreground leading-relaxed bg-secondary/40 p-6 rounded-xl border border-border/50 text-base">
                       {activePathData.profile}
                     </p>
