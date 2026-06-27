@@ -886,6 +886,30 @@ function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }
 /* ─── LETUM AI CHAT WIDGET ─── */
 interface ChatMessage { role: "user" | "assistant"; content: string; }
 
+const DAILY_LIMIT = 20;
+const QUICK_REPLIES = [
+  "What are Clyde's main skills?",
+  "How do I contact Clyde?",
+  "Tell me about his gaming achievements",
+  "What certifications does he have?",
+  "Can he do web development?",
+  "What's his finance experience?",
+];
+
+function useDailyLimit() {
+  const today = new Date().toISOString().slice(0, 10);
+  const key = `letum_usage_${today}`;
+  const [used, setUsed] = useState(() => {
+    try { return parseInt(localStorage.getItem(key) ?? "0", 10); } catch { return 0; }
+  });
+  const increment = () => {
+    const next = used + 1;
+    setUsed(next);
+    try { localStorage.setItem(key, String(next)); } catch {}
+  };
+  return { used, remaining: Math.max(0, DAILY_LIMIT - used), increment, exhausted: used >= DAILY_LIMIT };
+}
+
 function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -895,6 +919,8 @@ function ChatWidget() {
   const [streaming, setStreaming] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const { used, remaining, increment, exhausted } = useDailyLimit();
+  const showQuickReplies = messages.length === 1;
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -904,17 +930,16 @@ function ChatWidget() {
     if (open) setTimeout(() => inputRef.current?.focus(), 100);
   }, [open]);
 
-  async function send() {
-    const text = input.trim();
-    if (!text || streaming) return;
+  async function send(text?: string) {
+    const msg = (text ?? input).trim();
+    if (!msg || streaming || exhausted) return;
     setInput("");
+    increment();
 
-    const next: ChatMessage[] = [...messages, { role: "user", content: text }];
+    const next: ChatMessage[] = [...messages, { role: "user", content: msg }];
     setMessages(next);
     setStreaming(true);
-
-    const placeholder: ChatMessage = { role: "assistant", content: "" };
-    setMessages(m => [...m, placeholder]);
+    setMessages(m => [...m, { role: "assistant", content: "" }]);
 
     try {
       const res = await fetch("/api/chat", {
@@ -961,6 +986,8 @@ function ChatWidget() {
     }
   }
 
+  const limitColor = remaining <= 3 ? "text-red-400" : remaining <= 8 ? "text-yellow-400" : "text-muted-foreground";
+
   return (
     <>
       {/* Floating button */}
@@ -981,7 +1008,7 @@ function ChatWidget() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
             className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-24px)] rounded-2xl border border-border shadow-2xl bg-background flex flex-col overflow-hidden"
-            style={{ maxHeight: "520px" }}
+            style={{ maxHeight: "540px" }}
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-card/80">
@@ -992,7 +1019,9 @@ function ChatWidget() {
                 <p className="font-semibold text-sm text-foreground">Letum</p>
                 <p className="text-xs text-muted-foreground">Clyde's AI Assistant</p>
               </div>
-              <span className="ml-auto w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className={`ml-auto text-xs font-mono ${limitColor}`}>
+                {exhausted ? "Limit reached" : `${remaining}/${DAILY_LIMIT} left`}
+              </span>
             </div>
 
             {/* Messages */}
@@ -1014,6 +1043,30 @@ function ChatWidget() {
                   </div>
                 </div>
               ))}
+
+              {/* Quick reply chips — only shown at start */}
+              {showQuickReplies && !exhausted && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {QUICK_REPLIES.map((q, i) => (
+                    <button
+                      key={i}
+                      onClick={() => send(q)}
+                      disabled={streaming}
+                      className="text-xs px-2.5 py-1.5 rounded-full border border-border bg-secondary hover:border-primary/50 hover:bg-secondary/80 text-foreground transition-colors disabled:opacity-40"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {exhausted && (
+                <div className="text-xs text-center text-muted-foreground bg-secondary/50 rounded-xl px-3 py-2">
+                  Daily limit reached. Come back tomorrow, or email Clyde directly at{" "}
+                  <a href="mailto:princeclyde80@gmail.com" className="text-primary underline">princeclyde80@gmail.com</a>
+                </div>
+              )}
+
               <div ref={bottomRef} />
             </div>
 
@@ -1024,13 +1077,13 @@ function ChatWidget() {
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
-                placeholder="Ask about Clyde…"
-                disabled={streaming}
+                placeholder={exhausted ? "Daily limit reached" : "Ask about Clyde…"}
+                disabled={streaming || exhausted}
                 className="flex-1 bg-secondary rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted-foreground border border-border focus:border-primary/50 transition-colors disabled:opacity-50"
               />
               <button
-                onClick={send}
-                disabled={streaming || !input.trim()}
+                onClick={() => send()}
+                disabled={streaming || !input.trim() || exhausted}
                 className="w-9 h-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40"
               >
                 <Send className="w-4 h-4" />
