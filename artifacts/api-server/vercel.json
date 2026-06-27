@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd ../.. && pnpm --filter @workspace/portfolio run build && cp -r artifacts/portfolio/dist artifacts/api-server/dist-vercel",
+  "outputDirectory": "dist-vercel",
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": null
+}
