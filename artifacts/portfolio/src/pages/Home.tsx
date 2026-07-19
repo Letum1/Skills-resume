@@ -143,7 +143,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
-    hobbies: "Gaming, Cardio Exercise, Making Websites",
+    hobbies: "Fitness & Cardio Conditioning, Technology & Web Development",
   },
   {
     id: "tech",
@@ -299,7 +299,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
-    hobbies: "Gaming, Cardio Exercise, Making Websites",
+    hobbies: "Fitness & Cardio Conditioning, Technology & Web Development",
   },
   {
     id: "finance",
@@ -377,7 +377,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
-    hobbies: "Gaming, Cardio Exercise, Making Websites",
+    hobbies: "Fitness & Cardio Conditioning, Technology & Web Development",
   },
   {
     id: "gaming",
@@ -650,15 +650,16 @@ function ResumePage1({ path }: { path: PathData }) {
       {/* Professional Experience */}
       {path.experience.length > 0 && (
         <div style={{ marginBottom: "12px" }}>
-          <RH>{path.id === "housekeeping" ? "Professional Experience" : "Professional Experience"}</RH>
+          <RH>Professional Experience</RH>
           {path.experience.map((exp, i) => (
-            <div key={i} style={{ marginBottom: "8px" }}>
+            <div key={i} style={{ marginBottom: "10px" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={RS.bold}>{exp.role}, {exp.company}</p>
                 <p style={RS.small}>{exp.date}</p>
               </div>
-              <p style={{ ...RS.body, color: "#555" }}>{exp.company.split(",")[1]?.trim() || ""}</p>
-              <p style={{ ...RS.body, color: "#555" }}>{exp.role}</p>
+              {exp.bullets && exp.bullets.map((bullet, j) => (
+                <p key={j} style={{ ...RS.body, marginLeft: "12px", marginBottom: "2px" }}>• {bullet}</p>
+              ))}
             </div>
           ))}
         </div>
@@ -737,21 +738,6 @@ function ResumePage2({ path }: { path: PathData }) {
         ))}
       </div>
 
-      {/* Additional Experience (for HK: list security guard under Additional Experience) */}
-      {path.id === "housekeeping" && path.experience.length > 0 && (
-        <div style={{ marginBottom: "14px" }}>
-          <RH>Additional Experience</RH>
-          {path.experience.map((exp, i) => (
-            <div key={i} style={{ marginBottom: "6px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={RS.bold}>{exp.role}, {exp.company}</p>
-                <p style={RS.small}>{exp.date}</p>
-              </div>
-              <p style={{ ...RS.body, color: "#555" }}>{exp.company.split(",")[1]?.trim() || "Taguig City"}</p>
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Languages */}
       <div style={{ marginBottom: "14px" }}>
