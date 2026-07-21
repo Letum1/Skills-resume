@@ -751,6 +751,22 @@ function ResumePage2({ path }: { path: PathData }) {
         <p style={RS.body}>{path.hobbies}</p>
       </div>
 
+      {/* Online Portfolio QR Code */}
+      <div style={{ marginBottom: "14px" }}>
+        <RH>Online Portfolio</RH>
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://skills-resume-portfolio.vercel.app/&bgcolor=ffffff&color=1a3a8c&margin=4"
+            alt="Portfolio QR Code"
+            style={{ width: "90px", height: "90px", flexShrink: 0 }}
+          />
+          <div>
+            <p style={{ ...RS.bold, color: "#1a3a8c" }}>skills-resume-portfolio.vercel.app</p>
+            <p style={{ ...RS.body, color: "#555", marginTop: "2px" }}>Scan to view full interactive resume & all career paths online.</p>
+          </div>
+        </div>
+      </div>
+
       {/* Page number */}
       <div style={{ position: "absolute", bottom: "28px", right: "62px", ...RS.pageNum }}>2</div>
     </div>
@@ -1290,6 +1306,28 @@ export default function Home() {
                   <div className="bg-secondary/30 border border-border/50 rounded-xl p-6">
                     <h4 className={`font-mono text-sm font-bold mb-3 ${activePathData.accentColor}`}>Languages</h4>
                     <p className="text-sm text-muted-foreground">{activePathData.languages.join(" • ")}</p>
+                  </div>
+
+                  <div className="bg-secondary/30 border border-border/50 rounded-xl p-6">
+                    <h4 className={`font-mono text-sm font-bold mb-3 ${activePathData.accentColor}`}>Online Portfolio</h4>
+                    <div className="flex items-center gap-4">
+                      <img
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://skills-resume-portfolio.vercel.app/&bgcolor=ffffff&color=000000&margin=4"
+                        alt="Portfolio QR Code"
+                        className="w-20 h-20 rounded border border-border flex-shrink-0"
+                      />
+                      <div>
+                        <p className="text-xs font-mono text-foreground font-semibold break-all">skills-resume-portfolio.vercel.app</p>
+                        <a
+                          href="https://skills-resume-portfolio.vercel.app/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`text-xs mt-1 inline-block hover:underline ${activePathData.accentColor}`}
+                        >
+                          Open link ↗
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
