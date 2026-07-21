@@ -152,7 +152,7 @@ const PATHS: PathData[] = [
     accentColor: "text-cyan-400",
     tagBg: "bg-cyan-400/10 text-cyan-400 border-cyan-400/30",
     profile:
-      "A resourceful, self-taught full-stack developer skilled in AI-assisted web development workflows, utilizing platforms like Claude, Git/GitHub, and Vercel to rapidly build and deploy live applications. Demonstrates strong technical aptitude, a proactive learning mindset, and the ability to independently conceptualize, develop, and ship functional web products. Combines technical skill with financial literacy and strong work discipline for fast-paced development environments.",
+      "A resourceful, self-taught full-stack developer who has independently built and launched InstaWeb — a live SaaS platform that lets users publish permanent web pages from raw HTML/CSS/JS in seconds, complete with sandboxed preview and a built-in key-value database. Skilled in AI-assisted development workflows, Git/GitHub, and cloud deployment on Vercel. Demonstrates a proactive learning mindset and the ability to independently conceptualize, build, and ship real-world web products from zero.",
     accomplishments: [
       {
         heading: "Full-Stack Web Development",
@@ -197,14 +197,14 @@ const PATHS: PathData[] = [
     tools: ["Claude AI", "Git", "GitHub", "Vercel", "Render", "Firebase", "HTML", "CSS", "JavaScript", "React"],
     projects: [
       {
-        title: "Web App Project 1",
-        description: "A responsive front-end web application built and deployed independently.",
-        tags: ["HTML", "CSS", "JavaScript", "Vercel"],
+        title: "InstaWeb — Live Web Publishing Platform",
+        description: "Built and launched a full SaaS platform that lets anyone paste HTML/CSS/JS and publish a permanent, shareable web page in seconds — no account required. Features instant sandboxed live preview, permanent public URLs, and a built-in per-page key-value database (InstaWebDB) for persistence without a backend. Live at instaweb1.vercel.app.",
+        tags: ["Full-Stack", "SaaS", "JavaScript", "Vercel", "Database"],
       },
       {
         title: "Portfolio Website",
-        description: "Personal portfolio showcasing multiple career paths with dynamic tab navigation.",
-        tags: ["React", "Tailwind CSS", "Framer Motion"],
+        description: "Personal multi-path portfolio with dynamic resume generation, print-to-PDF, and contact form — tailored for five distinct career tracks.",
+        tags: ["React", "Tailwind CSS", "Framer Motion", "Vercel"],
       },
       {
         title: "Full Stack App",
@@ -494,8 +494,8 @@ const ALL_IN_ONE_PATH: PathData = {
     {
       heading: "Technology & Web Development",
       items: [
-        "Self-taught full-stack developer proficient in React, Vite, TypeScript, Tailwind CSS, and cloud deployment on Vercel.",
-        "Skilled in AI-assisted development workflows (Claude), Git/GitHub version control, and shipping production web applications.",
+        "Built and launched InstaWeb — a live SaaS platform for instant web page publishing with sandboxed preview, permanent URLs, and a built-in key-value database. Live at instaweb1.vercel.app.",
+        "Self-taught full-stack developer proficient in React, Vite, TypeScript, Tailwind CSS, AI-assisted workflows (Claude), Git/GitHub, and cloud deployment on Vercel.",
       ],
     },
     {
