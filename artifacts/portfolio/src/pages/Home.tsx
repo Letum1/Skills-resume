@@ -3,6 +3,31 @@ import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, Che
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Radar, Bar } from "react-chartjs-2";
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+);
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -562,6 +587,85 @@ const ALL_IN_ONE_PATH: PathData = {
   ],
   languages: ["English", "Tagalog"],
   hobbies: "Competitive Gaming (Top Global), Cardio Exercise, Making Websites",
+};
+
+/* ── Per-path skill proficiency for bar chart ── */
+const PATH_SKILLS: Record<PathId, { label: string; value: number }[]> = {
+  housekeeping: [
+    { label: "Room Inspection & Detailing", value: 95 },
+    { label: "Chemical Safety & Sanitization", value: 92 },
+    { label: "Inventory & Cost Control", value: 88 },
+    { label: "Guest Relations", value: 90 },
+    { label: "Time Management", value: 93 },
+    { label: "Turndown & Bed-Making", value: 96 },
+  ],
+  tech: [
+    { label: "HTML / CSS / JavaScript", value: 88 },
+    { label: "React & Frontend Dev", value: 85 },
+    { label: "AI-Assisted Development", value: 92 },
+    { label: "Git & Version Control", value: 82 },
+    { label: "Cloud Deployment", value: 87 },
+    { label: "Full-Stack Prototyping", value: 80 },
+  ],
+  security: [
+    { label: "Access Control & Patrol", value: 95 },
+    { label: "Conflict Resolution", value: 90 },
+    { label: "Customer Service", value: 92 },
+    { label: "Incident Documentation", value: 88 },
+    { label: "Emergency Response", value: 85 },
+    { label: "Reliability & Discipline", value: 98 },
+  ],
+  finance: [
+    { label: "Budgeting & Cost Management", value: 88 },
+    { label: "Inventory Management", value: 90 },
+    { label: "Financial Record-Keeping", value: 87 },
+    { label: "Crypto & Digital Assets", value: 80 },
+    { label: "Risk Awareness", value: 78 },
+    { label: "Savings & Investment Basics", value: 82 },
+  ],
+  gaming: [
+    { label: "Bug Detection & QA", value: 94 },
+    { label: "Competitive Performance", value: 97 },
+    { label: "Pattern Recognition", value: 95 },
+    { label: "Game Mechanics Analysis", value: 93 },
+    { label: "Documentation & Reporting", value: 85 },
+    { label: "Platform Knowledge", value: 90 },
+  ],
+  all: [
+    { label: "Hospitality & Housekeeping", value: 95 },
+    { label: "Tech & Web Development", value: 87 },
+    { label: "Security & Customer Service", value: 93 },
+    { label: "Finance & Budgeting", value: 85 },
+    { label: "Gaming & QA", value: 95 },
+    { label: "AI-Assisted Workflows", value: 92 },
+  ],
+};
+
+const PATH_ACCENT_HEX: Record<PathId, string> = {
+  housekeeping: "#fbbf24",
+  tech: "#22d3ee",
+  security: "#a78bfa",
+  finance: "#34d399",
+  gaming: "#e879f9",
+  all: "#d4af37",
+};
+
+const RADAR_DATA = {
+  labels: ["Hospitality", "Tech", "Security", "Finance", "Gaming & QA"],
+  datasets: [
+    {
+      label: "Skill Level",
+      data: [95, 87, 93, 85, 95],
+      backgroundColor: "rgba(212,175,55,0.15)",
+      borderColor: "#d4af37",
+      pointBackgroundColor: "#d4af37",
+      pointBorderColor: "#fff",
+      pointHoverBackgroundColor: "#fff",
+      pointHoverBorderColor: "#d4af37",
+      borderWidth: 2,
+      pointRadius: 5,
+    },
+  ],
 };
 
 const TIMELINE = [
@@ -1333,6 +1437,114 @@ export default function Home() {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+      </section>
+
+      {/* ─── CHARTS ─── */}
+      <section className="py-24 px-6 md:px-12 lg:px-24 border-t border-border/40">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2 text-center">By the Numbers</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">Skills at a Glance</h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+            {/* Radar — overall profile */}
+            <div className="bg-card/30 border border-border/50 rounded-2xl p-8">
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6 text-center">Overall Domain Profile</p>
+              <div className="max-w-sm mx-auto">
+                <Radar
+                  data={RADAR_DATA}
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: { display: false },
+                      tooltip: {
+                        backgroundColor: "#1a1a2e",
+                        titleColor: "#d4af37",
+                        bodyColor: "#ccc",
+                        callbacks: { label: (ctx) => ` ${ctx.raw}/100` },
+                      },
+                    },
+                    scales: {
+                      r: {
+                        min: 0,
+                        max: 100,
+                        ticks: { stepSize: 25, color: "#555", font: { size: 10 }, backdropColor: "transparent" },
+                        grid: { color: "rgba(255,255,255,0.07)" },
+                        angleLines: { color: "rgba(255,255,255,0.07)" },
+                        pointLabels: { color: "#aaa", font: { size: 12, weight: "600" } },
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Bar — active path skills */}
+            <div className="bg-card/30 border border-border/50 rounded-2xl p-8">
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-1 text-center">
+                Active Path Proficiency
+              </p>
+              <p
+                className="text-center font-semibold mb-6 text-sm"
+                style={{ color: PATH_ACCENT_HEX[activePath] }}
+              >
+                {activePath === "all" ? "All-in-One" : PATHS.find(p => p.id === activePath)?.label}
+              </p>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePath}
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -16 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Bar
+                    data={{
+                      labels: PATH_SKILLS[activePath].map(s => s.label),
+                      datasets: [
+                        {
+                          label: "Proficiency",
+                          data: PATH_SKILLS[activePath].map(s => s.value),
+                          backgroundColor: PATH_ACCENT_HEX[activePath] + "33",
+                          borderColor: PATH_ACCENT_HEX[activePath],
+                          borderWidth: 2,
+                          borderRadius: 6,
+                          hoverBackgroundColor: PATH_ACCENT_HEX[activePath] + "66",
+                        },
+                      ],
+                    }}
+                    options={{
+                      indexAxis: "y" as const,
+                      responsive: true,
+                      plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                          backgroundColor: "#1a1a2e",
+                          titleColor: "#fff",
+                          bodyColor: "#ccc",
+                          callbacks: { label: (ctx) => ` ${ctx.raw}%` },
+                        },
+                      },
+                      scales: {
+                        x: {
+                          min: 0,
+                          max: 100,
+                          ticks: { color: "#666", callback: (v) => `${v}%` },
+                          grid: { color: "rgba(255,255,255,0.05)" },
+                        },
+                        y: {
+                          ticks: { color: "#aaa", font: { size: 11 } },
+                          grid: { display: false },
+                        },
+                      },
+                    }}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+          </div>
         </div>
       </section>
 
