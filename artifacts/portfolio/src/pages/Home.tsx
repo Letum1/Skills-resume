@@ -139,12 +139,12 @@ const PATHS: PathData[] = [
       "Public Area & Deep Cleaning Maintenance",
       "Turndown & Bed-Making Service",
       "Health & Safety Compliance",
-      "Inventory Control & Management",
-      "Resource Allocation",
-      "Budgeting & Cost Management",
-      "Waste Reduction & Operational Efficiency",
+      "Linen & Amenity Management",
+      "Supply Inventory Tracking",
       "Guest Privacy & Discretion",
       "Time Management Under Pressure",
+      "Chemical Safety & Hazard Prevention",
+      "5-Star Cleanliness Standards",
     ],
     experience: [
       {
@@ -214,13 +214,13 @@ const PATHS: PathData[] = [
     expertise: [
       "HTML / CSS / JavaScript",
       "React & Frontend Development",
+      "TypeScript & Tailwind CSS",
       "Firebase Backend Integration",
       "Git & GitHub Version Control",
-      "Cloud Deployment (Vercel, Render)",
+      "Cloud Deployment (Vercel, Replit)",
       "AI-Assisted Development (Claude)",
       "Responsive Web Design",
       "Full-Stack Prototyping",
-      "Financial Literacy",
     ],
     tools: ["Claude AI", "Git", "GitHub", "Vercel", "Render", "Firebase", "HTML", "CSS", "JavaScript", "React"],
     projects: [
@@ -300,8 +300,8 @@ const PATHS: PathData[] = [
       "Report Writing & Incident Documentation",
       "Security Protocols & Emergency Response",
       "Customer Service in High-Volume Settings",
-      "Financial Literacy & Budgeting",
-      "Resource Allocation & Cost Control",
+      "Situational Awareness",
+      "Professionalism Under Pressure",
     ],
     experience: [
       {
