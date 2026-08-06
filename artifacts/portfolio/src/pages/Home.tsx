@@ -34,11 +34,14 @@ import { Textarea } from "@/components/ui/textarea";
 
 const PERSONAL_DATA = {
   name: "Clyde Miles Bonita",
-  location: "Taguig 1632, Philippines",
+  location: "50 Bayan St Cor MRT Ave Purok 1-A, New Lower Bicutan, Taguig City, NCR 1632",
+  locationShort: "New Lower Bicutan, Taguig City 1632",
   email: "princeclyde80@gmail.com",
   phone: "09109044620",
   tagline: "Service. Technology. Precision.",
   languages: ["English", "Tagalog"],
+  birthday: "September 28, 2006",
+  age: 19,
 };
 
 type PathId = "housekeeping" | "tech" | "security" | "finance" | "gaming" | "all";
@@ -93,7 +96,7 @@ const PATHS: PathData[] = [
     accentColor: "text-amber-400",
     tagBg: "bg-amber-400/10 text-amber-400 border-amber-400/30",
     profile:
-      "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal TESDA NC II certification in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Applies strong financial literacy and budgeting principles to optimize inventory control, reduce supply waste, and support cost-efficient operations — key competencies for large-scale shipboard hospitality environments.",
+      "TESDA NC II certified hospitality professional with formal training in 5-star luxury housekeeping standards. Skilled in guest service, room inspection, inventory control, and cost-efficient operations — with a strong sense of urgency, discretion, and detail in high-volume service environments.",
     accomplishments: [
       {
         heading: "Health, Safety & Sanitization Protocols",
@@ -177,7 +180,7 @@ const PATHS: PathData[] = [
     accentColor: "text-cyan-400",
     tagBg: "bg-cyan-400/10 text-cyan-400 border-cyan-400/30",
     profile:
-      "A resourceful, self-taught full-stack developer who has independently built and launched InstaWeb — a live SaaS platform that lets users publish permanent web pages from raw HTML/CSS/JS in seconds, complete with sandboxed preview and a built-in key-value database. Skilled in AI-assisted development workflows, Git/GitHub, and cloud deployment on Vercel. Demonstrates a proactive learning mindset and the ability to independently conceptualize, build, and ship real-world web products from zero.",
+      "Self-taught full-stack developer who built and launched InstaWeb — a live SaaS platform for instant web page publishing. Proficient in React, Vite, TypeScript, Tailwind CSS, AI-assisted workflows (Claude), Git/GitHub, and cloud deployment on Vercel and Replit.",
     accomplishments: [
       {
         heading: "Full-Stack Web Development",
@@ -258,7 +261,7 @@ const PATHS: PathData[] = [
     accentColor: "text-violet-400",
     tagBg: "bg-violet-400/10 text-violet-400 border-violet-400/30",
     profile:
-      "A dedicated and highly disciplined security and customer service professional with a proven track record in operational safety, access control, and public-facing service roles. Known for maintaining composure under pressure, resolving conflicts professionally, and delivering consistent, high-quality service to a large volume of daily customers. Brings strong communication skills, knowledge of laws and regulations, and an unwavering commitment to reliability and professionalism.",
+      "Security and customer service professional with a 100% safety record in access control and high-volume public-facing operations. Composed under pressure, skilled in conflict resolution, incident documentation, and delivering consistent professional service daily.",
     accomplishments: [
       {
         heading: "Operational Security Excellence",
@@ -333,7 +336,7 @@ const PATHS: PathData[] = [
     accentColor: "text-emerald-400",
     tagBg: "bg-emerald-400/10 text-emerald-400 border-emerald-400/30",
     profile:
-      "A financially literate and digitally aware professional with formal training in personal finance, budgeting, and asset management through the BDO Foundation. Knowledgeable in cryptocurrency markets (Bitcoin, Ethereum), NFT ecosystems, and blockchain technology — applying both traditional financial principles and digital asset awareness to real-world decisions. Brings a disciplined, accuracy-focused mindset suited for entry-level finance, crypto operations support, or financial administrative roles.",
+      "BDO Foundation certified in financial literacy and budgeting, with working knowledge of cryptocurrency (Bitcoin, Ethereum), NFTs, and DeFi. Accuracy-focused with a disciplined approach to financial record-keeping, asset management, and cost control.",
     accomplishments: [
       {
         heading: "Budgeting & Cost Management",
@@ -411,7 +414,7 @@ const PATHS: PathData[] = [
     accentColor: "text-fuchsia-400",
     tagBg: "bg-fuchsia-400/10 text-fuchsia-400 border-fuchsia-400/30",
     profile:
-      "A highly skilled competitive gamer with Top Global and Top Ranking achievements across multiple titles, bringing elite-level game knowledge to the field of game testing and quality assurance. Possesses an exceptionally sharp eye for bugs, glitches, and gameplay inconsistencies developed through thousands of hours of high-level play. Combines precision, rapid pattern recognition, and a deep understanding of game mechanics to deliver thorough, reliable QA feedback in fast-paced development environments.",
+      "Top Global and Top Ranked competitive gamer with thousands of hours of high-level play across multiple titles. Sharp eye for bugs, glitches, and gameplay inconsistencies — with the pattern recognition and documentation skills needed for professional game QA.",
     accomplishments: [
       {
         heading: "Elite Competitive Performance",
@@ -500,7 +503,7 @@ const ALL_IN_ONE_PATH: PathData = {
   accentColor: "text-primary",
   tagBg: "bg-primary/10 text-primary border-primary/30",
   profile:
-    "A versatile, multi-skilled professional combining formal certifications and hands-on expertise across five distinct domains: luxury housekeeping & hospitality, customer service & security operations, financial literacy & digital assets (Bitcoin, NFT, DeFi), full-stack web development, and elite-level competitive gaming. Brings a disciplined work ethic, sharp attention to detail, rapid adaptability, and a proven track record of excellence across every field pursued.",
+    "Multi-certified professional with expertise across five domains: housekeeping (TESDA NC II), finance (BDO Foundation), web development, security, and competitive gaming. Disciplined, detail-oriented, and adaptable — with a proven track record across every field pursued.",
   accomplishments: [
     {
       heading: "Hospitality & Housekeeping (TESDA NC II)",
@@ -712,9 +715,12 @@ function ResumePage1({ path }: { path: PathData }) {
           <h1 style={RS.name}>{PERSONAL_DATA.name}</h1>
           <p style={{ ...RS.contact, marginTop: "4px" }}>{path.label}</p>
           <p style={{ ...RS.contact, marginTop: "6px" }}>
-            {PERSONAL_DATA.location}&nbsp; | &nbsp;
+            {PERSONAL_DATA.location}
+          </p>
+          <p style={{ ...RS.contact, marginTop: "2px" }}>
             <span style={{ color: "#1a3a8c" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
-            {PERSONAL_DATA.phone}
+            {PERSONAL_DATA.phone}&nbsp; | &nbsp;
+            Age {PERSONAL_DATA.age} | Born {PERSONAL_DATA.birthday}
           </p>
         </div>
         {/* Passport-style photo */}
@@ -1080,10 +1086,11 @@ export default function Home() {
             {PERSONAL_DATA.tagline}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-12 text-sm font-mono text-muted-foreground">
-            <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" />{PERSONAL_DATA.location}</div>
+          <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-12 text-sm font-mono text-muted-foreground">
+            <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" />{PERSONAL_DATA.locationShort}</div>
             <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary" />{PERSONAL_DATA.email}</div>
             <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-primary" />{PERSONAL_DATA.phone}</div>
+            <div className="flex items-center gap-2 text-muted-foreground/70">🎂 {PERSONAL_DATA.birthday} · Age {PERSONAL_DATA.age}</div>
           </div>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-4">
