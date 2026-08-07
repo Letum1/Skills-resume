@@ -1,47 +1,19 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp, Gamepad2 } from "lucide-react";
+import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp, Gamepad2, MessageCircle, X, Send, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Radar, Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Tooltip,
-  Legend,
-);
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createPortal } from "react-dom";
 
 const PERSONAL_DATA = {
   name: "Clyde Miles Bonita",
-  location: "50 Bayan St Cor MRT Ave Purok 1-A, New Lower Bicutan, Taguig City, NCR 1632",
-  locationShort: "New Lower Bicutan, Taguig City 1632",
+  location: "Taguig 1632, Philippines",
   email: "princeclyde80@gmail.com",
   phone: "09109044620",
   tagline: "Service. Technology. Precision.",
   languages: ["English", "Tagalog"],
-  birthday: "September 28, 2006",
-  age: 19,
 };
 
 type PathId = "housekeeping" | "tech" | "security" | "finance" | "gaming" | "all";
@@ -96,7 +68,7 @@ const PATHS: PathData[] = [
     accentColor: "text-amber-400",
     tagBg: "bg-amber-400/10 text-amber-400 border-amber-400/30",
     profile:
-      "TESDA NC II certified hospitality professional with formal training in 5-star luxury housekeeping standards. Skilled in guest service, room inspection, inventory control, and cost-efficient operations — with a strong sense of urgency, discretion, and detail in high-volume service environments.",
+      "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal TESDA NC II certification in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Applies strong financial literacy and budgeting principles to optimize inventory control, reduce supply waste, and support cost-efficient operations — key competencies for large-scale shipboard hospitality environments.",
     accomplishments: [
       {
         heading: "Health, Safety & Sanitization Protocols",
@@ -139,12 +111,12 @@ const PATHS: PathData[] = [
       "Public Area & Deep Cleaning Maintenance",
       "Turndown & Bed-Making Service",
       "Health & Safety Compliance",
-      "Linen & Amenity Management",
-      "Supply Inventory Tracking",
+      "Inventory Control & Management",
+      "Resource Allocation",
+      "Budgeting & Cost Management",
+      "Waste Reduction & Operational Efficiency",
       "Guest Privacy & Discretion",
       "Time Management Under Pressure",
-      "Chemical Safety & Hazard Prevention",
-      "5-Star Cleanliness Standards",
     ],
     experience: [
       {
@@ -171,7 +143,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
-    hobbies: "Fitness & Cardio Conditioning, Technology & Web Development",
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
   {
     id: "tech",
@@ -180,7 +152,7 @@ const PATHS: PathData[] = [
     accentColor: "text-cyan-400",
     tagBg: "bg-cyan-400/10 text-cyan-400 border-cyan-400/30",
     profile:
-      "Self-taught full-stack developer who built and launched InstaWeb — a live SaaS platform for instant web page publishing. Proficient in React, Vite, TypeScript, Tailwind CSS, AI-assisted workflows (Claude), Git/GitHub, and cloud deployment on Vercel and Replit.",
+      "A resourceful, self-taught full-stack developer skilled in AI-assisted web development workflows, utilizing platforms like Claude, Git/GitHub, and Vercel to rapidly build and deploy live applications. Demonstrates strong technical aptitude, a proactive learning mindset, and the ability to independently conceptualize, develop, and ship functional web products. Combines technical skill with financial literacy and strong work discipline for fast-paced development environments.",
     accomplishments: [
       {
         heading: "Full-Stack Web Development",
@@ -214,25 +186,25 @@ const PATHS: PathData[] = [
     expertise: [
       "HTML / CSS / JavaScript",
       "React & Frontend Development",
-      "TypeScript & Tailwind CSS",
       "Firebase Backend Integration",
       "Git & GitHub Version Control",
-      "Cloud Deployment (Vercel, Replit)",
+      "Cloud Deployment (Vercel, Render)",
       "AI-Assisted Development (Claude)",
       "Responsive Web Design",
       "Full-Stack Prototyping",
+      "Financial Literacy",
     ],
     tools: ["Claude AI", "Git", "GitHub", "Vercel", "Render", "Firebase", "HTML", "CSS", "JavaScript", "React"],
     projects: [
       {
-        title: "InstaWeb — Live Web Publishing Platform",
-        description: "Built and launched a full SaaS platform that lets anyone paste HTML/CSS/JS and publish a permanent, shareable web page in seconds — no account required. Features instant sandboxed live preview, permanent public URLs, and a built-in per-page key-value database (InstaWebDB) for persistence without a backend. Live at instaweb1.vercel.app.",
-        tags: ["Full-Stack", "SaaS", "JavaScript", "Vercel", "Database"],
+        title: "Web App Project 1",
+        description: "A responsive front-end web application built and deployed independently.",
+        tags: ["HTML", "CSS", "JavaScript", "Vercel"],
       },
       {
         title: "Portfolio Website",
-        description: "Personal multi-path portfolio with dynamic resume generation, print-to-PDF, and contact form — tailored for five distinct career tracks.",
-        tags: ["React", "Tailwind CSS", "Framer Motion", "Vercel"],
+        description: "Personal portfolio showcasing multiple career paths with dynamic tab navigation.",
+        tags: ["React", "Tailwind CSS", "Framer Motion"],
       },
       {
         title: "Full Stack App",
@@ -261,7 +233,7 @@ const PATHS: PathData[] = [
     accentColor: "text-violet-400",
     tagBg: "bg-violet-400/10 text-violet-400 border-violet-400/30",
     profile:
-      "Security and customer service professional with a 100% safety record in access control and high-volume public-facing operations. Composed under pressure, skilled in conflict resolution, incident documentation, and delivering consistent professional service daily.",
+      "A dedicated and highly disciplined security and customer service professional with a proven track record in operational safety, access control, and public-facing service roles. Known for maintaining composure under pressure, resolving conflicts professionally, and delivering consistent, high-quality service to a large volume of daily customers. Brings strong communication skills, knowledge of laws and regulations, and an unwavering commitment to reliability and professionalism.",
     accomplishments: [
       {
         heading: "Operational Security Excellence",
@@ -300,8 +272,8 @@ const PATHS: PathData[] = [
       "Report Writing & Incident Documentation",
       "Security Protocols & Emergency Response",
       "Customer Service in High-Volume Settings",
-      "Situational Awareness",
-      "Professionalism Under Pressure",
+      "Financial Literacy & Budgeting",
+      "Resource Allocation & Cost Control",
     ],
     experience: [
       {
@@ -327,7 +299,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
-    hobbies: "Fitness & Cardio Conditioning, Technology & Web Development",
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
   {
     id: "finance",
@@ -336,7 +308,7 @@ const PATHS: PathData[] = [
     accentColor: "text-emerald-400",
     tagBg: "bg-emerald-400/10 text-emerald-400 border-emerald-400/30",
     profile:
-      "BDO Foundation certified in financial literacy and budgeting, with working knowledge of cryptocurrency (Bitcoin, Ethereum), NFTs, and DeFi. Accuracy-focused with a disciplined approach to financial record-keeping, asset management, and cost control.",
+      "A financially literate and digitally aware professional with formal training in personal finance, budgeting, and asset management through the BDO Foundation. Knowledgeable in cryptocurrency markets (Bitcoin, Ethereum), NFT ecosystems, and blockchain technology — applying both traditional financial principles and digital asset awareness to real-world decisions. Brings a disciplined, accuracy-focused mindset suited for entry-level finance, crypto operations support, or financial administrative roles.",
     accomplishments: [
       {
         heading: "Budgeting & Cost Management",
@@ -405,7 +377,7 @@ const PATHS: PathData[] = [
       { name: "Financial Literacy and Budgeting", issuer: "BDO Foundation", date: "Dec 2025" },
     ],
     languages: ["English", "Tagalog"],
-    hobbies: "Fitness & Cardio Conditioning, Technology & Web Development",
+    hobbies: "Gaming, Cardio Exercise, Making Websites",
   },
   {
     id: "gaming",
@@ -414,7 +386,7 @@ const PATHS: PathData[] = [
     accentColor: "text-fuchsia-400",
     tagBg: "bg-fuchsia-400/10 text-fuchsia-400 border-fuchsia-400/30",
     profile:
-      "Top Global and Top Ranked competitive gamer with thousands of hours of high-level play across multiple titles. Sharp eye for bugs, glitches, and gameplay inconsistencies — with the pattern recognition and documentation skills needed for professional game QA.",
+      "A highly skilled competitive gamer with Top Global and Top Ranking achievements across multiple titles, bringing elite-level game knowledge to the field of game testing and quality assurance. Possesses an exceptionally sharp eye for bugs, glitches, and gameplay inconsistencies developed through thousands of hours of high-level play. Combines precision, rapid pattern recognition, and a deep understanding of game mechanics to deliver thorough, reliable QA feedback in fast-paced development environments.",
     accomplishments: [
       {
         heading: "Elite Competitive Performance",
@@ -503,7 +475,7 @@ const ALL_IN_ONE_PATH: PathData = {
   accentColor: "text-primary",
   tagBg: "bg-primary/10 text-primary border-primary/30",
   profile:
-    "Multi-certified professional with expertise across five domains: housekeeping (TESDA NC II), finance (BDO Foundation), web development, security, and competitive gaming. Disciplined, detail-oriented, and adaptable — with a proven track record across every field pursued.",
+    "A versatile, multi-skilled professional combining formal certifications and hands-on expertise across five distinct domains: luxury housekeeping & hospitality, customer service & security operations, financial literacy & digital assets (Bitcoin, NFT, DeFi), full-stack web development, and elite-level competitive gaming. Brings a disciplined work ethic, sharp attention to detail, rapid adaptability, and a proven track record of excellence across every field pursued.",
   accomplishments: [
     {
       heading: "Hospitality & Housekeeping (TESDA NC II)",
@@ -522,8 +494,8 @@ const ALL_IN_ONE_PATH: PathData = {
     {
       heading: "Technology & Web Development",
       items: [
-        "Built and launched InstaWeb — a live SaaS platform for instant web page publishing with sandboxed preview, permanent URLs, and a built-in key-value database. Live at instaweb1.vercel.app.",
-        "Self-taught full-stack developer proficient in React, Vite, TypeScript, Tailwind CSS, AI-assisted workflows (Claude), Git/GitHub, and cloud deployment on Vercel.",
+        "Self-taught full-stack developer proficient in React, Vite, TypeScript, Tailwind CSS, and cloud deployment on Vercel.",
+        "Skilled in AI-assisted development workflows (Claude), Git/GitHub version control, and shipping production web applications.",
       ],
     },
     {
@@ -592,85 +564,6 @@ const ALL_IN_ONE_PATH: PathData = {
   hobbies: "Competitive Gaming (Top Global), Cardio Exercise, Making Websites",
 };
 
-/* ── Per-path skill proficiency for bar chart ── */
-const PATH_SKILLS: Record<PathId, { label: string; value: number }[]> = {
-  housekeeping: [
-    { label: "Room Inspection & Detailing", value: 95 },
-    { label: "Chemical Safety & Sanitization", value: 92 },
-    { label: "Inventory & Cost Control", value: 88 },
-    { label: "Guest Relations", value: 90 },
-    { label: "Time Management", value: 93 },
-    { label: "Turndown & Bed-Making", value: 96 },
-  ],
-  tech: [
-    { label: "HTML / CSS / JavaScript", value: 88 },
-    { label: "React & Frontend Dev", value: 85 },
-    { label: "AI-Assisted Development", value: 92 },
-    { label: "Git & Version Control", value: 82 },
-    { label: "Cloud Deployment", value: 87 },
-    { label: "Full-Stack Prototyping", value: 80 },
-  ],
-  security: [
-    { label: "Access Control & Patrol", value: 95 },
-    { label: "Conflict Resolution", value: 90 },
-    { label: "Customer Service", value: 92 },
-    { label: "Incident Documentation", value: 88 },
-    { label: "Emergency Response", value: 85 },
-    { label: "Reliability & Discipline", value: 98 },
-  ],
-  finance: [
-    { label: "Budgeting & Cost Management", value: 88 },
-    { label: "Inventory Management", value: 90 },
-    { label: "Financial Record-Keeping", value: 87 },
-    { label: "Crypto & Digital Assets", value: 80 },
-    { label: "Risk Awareness", value: 78 },
-    { label: "Savings & Investment Basics", value: 82 },
-  ],
-  gaming: [
-    { label: "Bug Detection & QA", value: 94 },
-    { label: "Competitive Performance", value: 97 },
-    { label: "Pattern Recognition", value: 95 },
-    { label: "Game Mechanics Analysis", value: 93 },
-    { label: "Documentation & Reporting", value: 85 },
-    { label: "Platform Knowledge", value: 90 },
-  ],
-  all: [
-    { label: "Hospitality & Housekeeping", value: 95 },
-    { label: "Tech & Web Development", value: 87 },
-    { label: "Security & Customer Service", value: 93 },
-    { label: "Finance & Budgeting", value: 85 },
-    { label: "Gaming & QA", value: 95 },
-    { label: "AI-Assisted Workflows", value: 92 },
-  ],
-};
-
-const PATH_ACCENT_HEX: Record<PathId, string> = {
-  housekeeping: "#fbbf24",
-  tech: "#22d3ee",
-  security: "#a78bfa",
-  finance: "#34d399",
-  gaming: "#e879f9",
-  all: "#d4af37",
-};
-
-const RADAR_DATA = {
-  labels: ["Hospitality", "Tech", "Security", "Finance", "Gaming & QA"],
-  datasets: [
-    {
-      label: "Skill Level",
-      data: [95, 87, 93, 85, 95],
-      backgroundColor: "rgba(212,175,55,0.15)",
-      borderColor: "#d4af37",
-      pointBackgroundColor: "#d4af37",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "#d4af37",
-      borderWidth: 2,
-      pointRadius: 5,
-    },
-  ],
-};
-
 const TIMELINE = [
   { date: "Jan 2026 – May 2026", title: "Housekeeping NC II Certification", org: "TESDA", tag: "Hospitality", color: "bg-amber-400" },
   { date: "Dec 2025", title: "Financial Literacy and Budgeting", org: "BDO Foundation", tag: "Certification", color: "bg-emerald-400" },
@@ -715,12 +608,9 @@ function ResumePage1({ path }: { path: PathData }) {
           <h1 style={RS.name}>{PERSONAL_DATA.name}</h1>
           <p style={{ ...RS.contact, marginTop: "4px" }}>{path.label}</p>
           <p style={{ ...RS.contact, marginTop: "6px" }}>
-            {PERSONAL_DATA.location}
-          </p>
-          <p style={{ ...RS.contact, marginTop: "2px" }}>
+            {PERSONAL_DATA.location}&nbsp; | &nbsp;
             <span style={{ color: "#1a3a8c" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
-            {PERSONAL_DATA.phone}&nbsp; | &nbsp;
-            Age {PERSONAL_DATA.age} | Born {PERSONAL_DATA.birthday}
+            {PERSONAL_DATA.phone}
           </p>
         </div>
         {/* Passport-style photo */}
@@ -760,16 +650,15 @@ function ResumePage1({ path }: { path: PathData }) {
       {/* Professional Experience */}
       {path.experience.length > 0 && (
         <div style={{ marginBottom: "12px" }}>
-          <RH>Professional Experience</RH>
+          <RH>{path.id === "housekeeping" ? "Professional Experience" : "Professional Experience"}</RH>
           {path.experience.map((exp, i) => (
-            <div key={i} style={{ marginBottom: "10px" }}>
+            <div key={i} style={{ marginBottom: "8px" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <p style={RS.bold}>{exp.role}, {exp.company}</p>
                 <p style={RS.small}>{exp.date}</p>
               </div>
-              {exp.bullets && exp.bullets.map((bullet, j) => (
-                <p key={j} style={{ ...RS.body, marginLeft: "12px", marginBottom: "2px" }}>• {bullet}</p>
-              ))}
+              <p style={{ ...RS.body, color: "#555" }}>{exp.company.split(",")[1]?.trim() || ""}</p>
+              <p style={{ ...RS.body, color: "#555" }}>{exp.role}</p>
             </div>
           ))}
         </div>
@@ -848,6 +737,21 @@ function ResumePage2({ path }: { path: PathData }) {
         ))}
       </div>
 
+      {/* Additional Experience (for HK: list security guard under Additional Experience) */}
+      {path.id === "housekeeping" && path.experience.length > 0 && (
+        <div style={{ marginBottom: "14px" }}>
+          <RH>Additional Experience</RH>
+          {path.experience.map((exp, i) => (
+            <div key={i} style={{ marginBottom: "6px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={RS.bold}>{exp.role}, {exp.company}</p>
+                <p style={RS.small}>{exp.date}</p>
+              </div>
+              <p style={{ ...RS.body, color: "#555" }}>{exp.company.split(",")[1]?.trim() || "Taguig City"}</p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Languages */}
       <div style={{ marginBottom: "14px" }}>
@@ -859,22 +763,6 @@ function ResumePage2({ path }: { path: PathData }) {
       <div style={{ marginBottom: "14px" }}>
         <RH>Hobbies</RH>
         <p style={RS.body}>{path.hobbies}</p>
-      </div>
-
-      {/* Online Portfolio QR Code */}
-      <div style={{ marginBottom: "14px" }}>
-        <RH>Online Portfolio</RH>
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-          <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://skills-resume-portfolio.vercel.app/&bgcolor=ffffff&color=1a3a8c&margin=4"
-            alt="Portfolio QR Code"
-            style={{ width: "90px", height: "90px", flexShrink: 0 }}
-          />
-          <div>
-            <p style={{ ...RS.bold, color: "#1a3a8c" }}>skills-resume-portfolio.vercel.app</p>
-            <p style={{ ...RS.body, color: "#555", marginTop: "2px" }}>Scan to view full interactive resume & all career paths online.</p>
-          </div>
-        </div>
       </div>
 
       {/* Page number */}
@@ -995,6 +883,219 @@ function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }
   );
 }
 
+/* ─── LETUM AI CHAT WIDGET ─── */
+interface ChatMessage { role: "user" | "assistant"; content: string; }
+
+const DAILY_LIMIT = 20;
+const QUICK_REPLIES = [
+  "What are Clyde's main skills?",
+  "How do I contact Clyde?",
+  "Tell me about his gaming achievements",
+  "What certifications does he have?",
+  "Can he do web development?",
+  "What's his finance experience?",
+];
+
+function useDailyLimit() {
+  const today = new Date().toISOString().slice(0, 10);
+  const key = `letum_usage_${today}`;
+  const [used, setUsed] = useState(() => {
+    try { return parseInt(localStorage.getItem(key) ?? "0", 10); } catch { return 0; }
+  });
+  const increment = () => {
+    const next = used + 1;
+    setUsed(next);
+    try { localStorage.setItem(key, String(next)); } catch {}
+  };
+  return { used, remaining: Math.max(0, DAILY_LIMIT - used), increment, exhausted: used >= DAILY_LIMIT };
+}
+
+function ChatWidget() {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { role: "assistant", content: "Hi! I'm Letum, Clyde's AI assistant. Ask me anything about his skills, experience, or how to get in touch! 👋" },
+  ]);
+  const [input, setInput] = useState("");
+  const [streaming, setStreaming] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { used, remaining, increment, exhausted } = useDailyLimit();
+  const showQuickReplies = messages.length === 1;
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, streaming]);
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 100);
+  }, [open]);
+
+  async function send(text?: string) {
+    const msg = (text ?? input).trim();
+    if (!msg || streaming || exhausted) return;
+    setInput("");
+    increment();
+
+    const next: ChatMessage[] = [...messages, { role: "user", content: msg }];
+    setMessages(next);
+    setStreaming(true);
+    setMessages(m => [...m, { role: "assistant", content: "" }]);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: next.map(m => ({ role: m.role, content: m.content })) }),
+      });
+
+      if (!res.ok || !res.body) throw new Error("Request failed");
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let fullText = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const lines = decoder.decode(value).split("\n").filter(l => l.startsWith("data: "));
+        for (const line of lines) {
+          const data = line.slice(6);
+          if (data === "[DONE]") break;
+          try {
+            const json = JSON.parse(data);
+            const delta = json.choices?.[0]?.delta?.content;
+            if (delta) {
+              fullText += delta;
+              setMessages(m => {
+                const copy = [...m];
+                copy[copy.length - 1] = { role: "assistant", content: fullText };
+                return copy;
+              });
+            }
+          } catch { /* skip malformed */ }
+        }
+      }
+    } catch {
+      setMessages(m => {
+        const copy = [...m];
+        copy[copy.length - 1] = { role: "assistant", content: "Sorry, I couldn't connect right now. You can reach Clyde directly at princeclyde80@gmail.com" };
+        return copy;
+      });
+    } finally {
+      setStreaming(false);
+    }
+  }
+
+  const limitColor = remaining <= 3 ? "text-red-400" : remaining <= 8 ? "text-yellow-400" : "text-muted-foreground";
+
+  return (
+    <>
+      {/* Floating button */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_0_24px_rgba(212,175,55,0.4)] flex items-center justify-center hover:scale-105 transition-transform"
+        aria-label="Chat with Letum"
+      >
+        {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+      </button>
+
+      {/* Chat panel */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-24px)] rounded-2xl border border-border shadow-2xl bg-background flex flex-col overflow-hidden"
+            style={{ maxHeight: "540px" }}
+          >
+            {/* Header */}
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-card/80">
+              <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
+                <Bot className="w-4 h-4 text-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-sm text-foreground">Letum</p>
+                <p className="text-xs text-muted-foreground">Clyde's AI Assistant</p>
+              </div>
+              <span className={`ml-auto text-xs font-mono ${limitColor}`}>
+                {exhausted ? "Limit reached" : `${remaining}/${DAILY_LIMIT} left`}
+              </span>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: 0 }}>
+              {messages.map((msg, i) => (
+                <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                  <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
+                    msg.role === "user"
+                      ? "bg-primary text-primary-foreground rounded-br-sm"
+                      : "bg-secondary text-foreground rounded-bl-sm"
+                  }`}>
+                    {msg.content || (streaming && i === messages.length - 1 ? (
+                      <span className="flex gap-1 items-center h-4">
+                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "0ms" }} />
+                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "150ms" }} />
+                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "300ms" }} />
+                      </span>
+                    ) : "")}
+                  </div>
+                </div>
+              ))}
+
+              {/* Quick reply chips — only shown at start */}
+              {showQuickReplies && !exhausted && (
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {QUICK_REPLIES.map((q, i) => (
+                    <button
+                      key={i}
+                      onClick={() => send(q)}
+                      disabled={streaming}
+                      className="text-xs px-2.5 py-1.5 rounded-full border border-border bg-secondary hover:border-primary/50 hover:bg-secondary/80 text-foreground transition-colors disabled:opacity-40"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {exhausted && (
+                <div className="text-xs text-center text-muted-foreground bg-secondary/50 rounded-xl px-3 py-2">
+                  Daily limit reached. Come back tomorrow, or email Clyde directly at{" "}
+                  <a href="mailto:princeclyde80@gmail.com" className="text-primary underline">princeclyde80@gmail.com</a>
+                </div>
+              )}
+
+              <div ref={bottomRef} />
+            </div>
+
+            {/* Input */}
+            <div className="border-t border-border px-3 py-3 flex gap-2 bg-card/40">
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
+                placeholder={exhausted ? "Daily limit reached" : "Ask about Clyde…"}
+                disabled={streaming || exhausted}
+                className="flex-1 bg-secondary rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted-foreground border border-border focus:border-primary/50 transition-colors disabled:opacity-50"
+              />
+              <button
+                onClick={() => send()}
+                disabled={streaming || !input.trim() || exhausted}
+                className="w-9 h-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40"
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 export default function Home() {
   const [activePath, setActivePath] = useState<PathId>("housekeeping");
   const [showResume, setShowResume] = useState(false);
@@ -1086,11 +1187,10 @@ export default function Home() {
             {PERSONAL_DATA.tagline}
           </p>
 
-          <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-12 text-sm font-mono text-muted-foreground">
-            <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" />{PERSONAL_DATA.locationShort}</div>
+          <div className="flex flex-col sm:flex-row gap-4 mb-12 text-sm font-mono text-muted-foreground">
+            <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" />{PERSONAL_DATA.location}</div>
             <div className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary" />{PERSONAL_DATA.email}</div>
             <div className="flex items-center gap-2"><Phone className="w-4 h-4 text-primary" />{PERSONAL_DATA.phone}</div>
-            <div className="flex items-center gap-2 text-muted-foreground/70">🎂 {PERSONAL_DATA.birthday} · Age {PERSONAL_DATA.age}</div>
           </div>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-4">
@@ -1418,140 +1518,10 @@ export default function Home() {
                     <h4 className={`font-mono text-sm font-bold mb-3 ${activePathData.accentColor}`}>Languages</h4>
                     <p className="text-sm text-muted-foreground">{activePathData.languages.join(" • ")}</p>
                   </div>
-
-                  <div className="bg-secondary/30 border border-border/50 rounded-xl p-6">
-                    <h4 className={`font-mono text-sm font-bold mb-3 ${activePathData.accentColor}`}>Online Portfolio</h4>
-                    <div className="flex items-center gap-4">
-                      <img
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://skills-resume-portfolio.vercel.app/&bgcolor=ffffff&color=000000&margin=4"
-                        alt="Portfolio QR Code"
-                        className="w-20 h-20 rounded border border-border flex-shrink-0"
-                      />
-                      <div>
-                        <p className="text-xs font-mono text-foreground font-semibold break-all">skills-resume-portfolio.vercel.app</p>
-                        <a
-                          href="https://skills-resume-portfolio.vercel.app/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`text-xs mt-1 inline-block hover:underline ${activePathData.accentColor}`}
-                        >
-                          Open link ↗
-                        </a>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
-      </section>
-
-      {/* ─── CHARTS ─── */}
-      <section className="py-24 px-6 md:px-12 lg:px-24 border-t border-border/40">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2 text-center">By the Numbers</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">Skills at a Glance</h2>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-
-            {/* Radar — overall profile */}
-            <div className="bg-card/30 border border-border/50 rounded-2xl p-8">
-              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-6 text-center">Overall Domain Profile</p>
-              <div className="max-w-sm mx-auto">
-                <Radar
-                  data={RADAR_DATA}
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: { display: false },
-                      tooltip: {
-                        backgroundColor: "#1a1a2e",
-                        titleColor: "#d4af37",
-                        bodyColor: "#ccc",
-                        callbacks: { label: (ctx) => ` ${ctx.raw}/100` },
-                      },
-                    },
-                    scales: {
-                      r: {
-                        min: 0,
-                        max: 100,
-                        ticks: { stepSize: 25, color: "#555", font: { size: 10 }, backdropColor: "transparent" },
-                        grid: { color: "rgba(255,255,255,0.07)" },
-                        angleLines: { color: "rgba(255,255,255,0.07)" },
-                        pointLabels: { color: "#aaa", font: { size: 12, weight: "600" } },
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Bar — active path skills */}
-            <div className="bg-card/30 border border-border/50 rounded-2xl p-8">
-              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-1 text-center">
-                Active Path Proficiency
-              </p>
-              <p
-                className="text-center font-semibold mb-6 text-sm"
-                style={{ color: PATH_ACCENT_HEX[activePath] }}
-              >
-                {activePath === "all" ? "All-in-One" : PATHS.find(p => p.id === activePath)?.label}
-              </p>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activePath}
-                  initial={{ opacity: 0, x: 16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -16 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Bar
-                    data={{
-                      labels: PATH_SKILLS[activePath].map(s => s.label),
-                      datasets: [
-                        {
-                          label: "Proficiency",
-                          data: PATH_SKILLS[activePath].map(s => s.value),
-                          backgroundColor: PATH_ACCENT_HEX[activePath] + "33",
-                          borderColor: PATH_ACCENT_HEX[activePath],
-                          borderWidth: 2,
-                          borderRadius: 6,
-                          hoverBackgroundColor: PATH_ACCENT_HEX[activePath] + "66",
-                        },
-                      ],
-                    }}
-                    options={{
-                      indexAxis: "y" as const,
-                      responsive: true,
-                      plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                          backgroundColor: "#1a1a2e",
-                          titleColor: "#fff",
-                          bodyColor: "#ccc",
-                          callbacks: { label: (ctx) => ` ${ctx.raw}%` },
-                        },
-                      },
-                      scales: {
-                        x: {
-                          min: 0,
-                          max: 100,
-                          ticks: { color: "#666", callback: (v) => `${v}%` },
-                          grid: { color: "rgba(255,255,255,0.05)" },
-                        },
-                        y: {
-                          ticks: { color: "#aaa", font: { size: 11 } },
-                          grid: { display: false },
-                        },
-                      },
-                    }}
-                  />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-          </div>
         </div>
       </section>
 
@@ -1737,6 +1707,7 @@ export default function Home() {
         {new Date().getFullYear()} {PERSONAL_DATA.name} — Taguig, Philippines
       </footer>
 
+      <ChatWidget />
     </div>
   );
 }
