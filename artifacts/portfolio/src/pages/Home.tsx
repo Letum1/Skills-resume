@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp, Gamepad2, MessageCircle, X, Send, Bot } from "lucide-react";
+import { MapPin, Mail, Phone, Code, Shield, Sparkles, ChevronDown, FileText, CheckCircle, Printer, LayoutGrid, TrendingUp, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,6 +48,7 @@ interface PathData {
   icon: typeof Sparkles;
   accentColor: string;
   tagBg: string;
+  printAccent: string;
   profile: string;
   accomplishments: ResumeSection[];
   expertise: string[];
@@ -67,6 +68,7 @@ const PATHS: PathData[] = [
     icon: Sparkles,
     accentColor: "text-amber-400",
     tagBg: "bg-amber-400/10 text-amber-400 border-amber-400/30",
+    printAccent: "#d97706",
     profile:
       "A highly disciplined, detail-oriented, and guest-focused hospitality professional with formal TESDA NC II certification in luxury housekeeping standards. Adept at maintaining flawless cleanliness, managing high-volume guest requests, and executing tasks with a strong sense of urgency and discretion. Applies strong financial literacy and budgeting principles to optimize inventory control, reduce supply waste, and support cost-efficient operations — key competencies for large-scale shipboard hospitality environments.",
     accomplishments: [
@@ -151,6 +153,7 @@ const PATHS: PathData[] = [
     icon: Code,
     accentColor: "text-cyan-400",
     tagBg: "bg-cyan-400/10 text-cyan-400 border-cyan-400/30",
+    printAccent: "#0369a1",
     profile:
       "A resourceful, self-taught full-stack developer skilled in AI-assisted web development workflows, utilizing platforms like Claude, Git/GitHub, and Vercel to rapidly build and deploy live applications. Demonstrates strong technical aptitude, a proactive learning mindset, and the ability to independently conceptualize, develop, and ship functional web products. Combines technical skill with financial literacy and strong work discipline for fast-paced development environments.",
     accomplishments: [
@@ -232,6 +235,7 @@ const PATHS: PathData[] = [
     icon: Shield,
     accentColor: "text-violet-400",
     tagBg: "bg-violet-400/10 text-violet-400 border-violet-400/30",
+    printAccent: "#6d28d9",
     profile:
       "A dedicated and highly disciplined security and customer service professional with a proven track record in operational safety, access control, and public-facing service roles. Known for maintaining composure under pressure, resolving conflicts professionally, and delivering consistent, high-quality service to a large volume of daily customers. Brings strong communication skills, knowledge of laws and regulations, and an unwavering commitment to reliability and professionalism.",
     accomplishments: [
@@ -307,6 +311,7 @@ const PATHS: PathData[] = [
     icon: TrendingUp,
     accentColor: "text-emerald-400",
     tagBg: "bg-emerald-400/10 text-emerald-400 border-emerald-400/30",
+    printAccent: "#047857",
     profile:
       "A financially literate and digitally aware professional with formal training in personal finance, budgeting, and asset management through the BDO Foundation. Knowledgeable in cryptocurrency markets (Bitcoin, Ethereum), NFT ecosystems, and blockchain technology — applying both traditional financial principles and digital asset awareness to real-world decisions. Brings a disciplined, accuracy-focused mindset suited for entry-level finance, crypto operations support, or financial administrative roles.",
     accomplishments: [
@@ -385,6 +390,7 @@ const PATHS: PathData[] = [
     icon: Gamepad2,
     accentColor: "text-fuchsia-400",
     tagBg: "bg-fuchsia-400/10 text-fuchsia-400 border-fuchsia-400/30",
+    printAccent: "#c026d3",
     profile:
       "A highly skilled competitive gamer with Top Global and Top Ranking achievements across multiple titles, bringing elite-level game knowledge to the field of game testing and quality assurance. Possesses an exceptionally sharp eye for bugs, glitches, and gameplay inconsistencies developed through thousands of hours of high-level play. Combines precision, rapid pattern recognition, and a deep understanding of game mechanics to deliver thorough, reliable QA feedback in fast-paced development environments.",
     accomplishments: [
@@ -474,6 +480,7 @@ const ALL_IN_ONE_PATH: PathData = {
   icon: LayoutGrid,
   accentColor: "text-primary",
   tagBg: "bg-primary/10 text-primary border-primary/30",
+  printAccent: "#a16207",
   profile:
     "A versatile, multi-skilled professional combining formal certifications and hands-on expertise across five distinct domains: luxury housekeeping & hospitality, customer service & security operations, financial literacy & digital assets (Bitcoin, NFT, DeFi), full-stack web development, and elite-level competitive gaming. Brings a disciplined work ethic, sharp attention to detail, rapid adaptability, and a proven track record of excellence across every field pursued.",
   accomplishments: [
@@ -573,14 +580,17 @@ const TIMELINE = [
 
 /* ── Shared resume style constants ── */
 const RS = {
-  name:        { fontSize: "24pt", fontWeight: "800", color: "#1a3a8c", textTransform: "uppercase" as const, letterSpacing: "1.5px", margin: "0 0 4px 0", fontFamily: "Arial, sans-serif" },
+  name:        { fontSize: "24pt", fontWeight: "800", color: "var(--resume-accent)", textTransform: "uppercase" as const, letterSpacing: "1.5px", margin: "0 0 4px 0", fontFamily: "Arial, sans-serif" },
   contact:     { fontSize: "10pt", color: "#333", fontFamily: "Arial, sans-serif", margin: "0 0 2px 0" },
-  sectionHead: { fontSize: "10pt", fontWeight: "800", color: "#1a3a8c", textTransform: "uppercase" as const, letterSpacing: "1.5px", borderBottom: "2px solid #1a3a8c", paddingBottom: "3px", marginBottom: "8px", marginTop: "0", fontFamily: "Arial, sans-serif" },
+  sectionHead: { fontSize: "10pt", fontWeight: "800", color: "var(--resume-accent)", textTransform: "uppercase" as const, letterSpacing: "1.5px", borderBottom: "2px solid var(--resume-accent)", paddingBottom: "3px", marginBottom: "8px", marginTop: "0", fontFamily: "Arial, sans-serif" },
   body:        { fontSize: "10.5pt", color: "#222", lineHeight: "1.5", margin: "0" },
   bold:        { fontSize: "10.5pt", fontWeight: "700", color: "#111", margin: "0 0 2px 0" },
   small:       { fontSize: "10pt", color: "#555", margin: "0", fontFamily: "Arial, sans-serif", whiteSpace: "nowrap" as const },
   pageNum:     { fontSize: "9pt", color: "#aaa", fontFamily: "Arial, sans-serif" },
 };
+
+const resumeVars = (path: PathData) =>
+  ({ "--resume-accent": path.printAccent } as React.CSSProperties);
 
 /* Reusable section heading */
 function RH({ children }: { children: string }) {
@@ -593,6 +603,7 @@ function ResumePage1({ path }: { path: PathData }) {
     <div
       className="resume-page"
       style={{
+        ...resumeVars(path),
         background: "#fff",
         width: "816px",
         minHeight: "1056px",
@@ -609,7 +620,7 @@ function ResumePage1({ path }: { path: PathData }) {
           <p style={{ ...RS.contact, marginTop: "4px" }}>{path.label}</p>
           <p style={{ ...RS.contact, marginTop: "6px" }}>
             {PERSONAL_DATA.location}&nbsp; | &nbsp;
-            <span style={{ color: "#1a3a8c" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
+            <span style={{ color: "var(--resume-accent)" }}>{PERSONAL_DATA.email}</span>&nbsp; | &nbsp;
             {PERSONAL_DATA.phone}
           </p>
         </div>
@@ -622,7 +633,7 @@ function ResumePage1({ path }: { path: PathData }) {
             height: "120px",
             objectFit: "cover",
             objectPosition: "center top",
-            border: "2px solid #1a3a8c",
+            border: "2px solid var(--resume-accent)",
             flexShrink: 0,
           }}
         />
@@ -707,6 +718,7 @@ function ResumePage2({ path }: { path: PathData }) {
     <div
       className="resume-page"
       style={{
+        ...resumeVars(path),
         background: "#fff",
         width: "816px",
         minHeight: "1056px",
@@ -883,219 +895,6 @@ function ResumeViewer({ path, onPrint }: { path: PathData; onPrint: () => void }
   );
 }
 
-/* ─── LETUM AI CHAT WIDGET ─── */
-interface ChatMessage { role: "user" | "assistant"; content: string; }
-
-const DAILY_LIMIT = 20;
-const QUICK_REPLIES = [
-  "What are Clyde's main skills?",
-  "How do I contact Clyde?",
-  "Tell me about his gaming achievements",
-  "What certifications does he have?",
-  "Can he do web development?",
-  "What's his finance experience?",
-];
-
-function useDailyLimit() {
-  const today = new Date().toISOString().slice(0, 10);
-  const key = `letum_usage_${today}`;
-  const [used, setUsed] = useState(() => {
-    try { return parseInt(localStorage.getItem(key) ?? "0", 10); } catch { return 0; }
-  });
-  const increment = () => {
-    const next = used + 1;
-    setUsed(next);
-    try { localStorage.setItem(key, String(next)); } catch {}
-  };
-  return { used, remaining: Math.max(0, DAILY_LIMIT - used), increment, exhausted: used >= DAILY_LIMIT };
-}
-
-function ChatWidget() {
-  const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: "assistant", content: "Hi! I'm Letum, Clyde's AI assistant. Ask me anything about his skills, experience, or how to get in touch! 👋" },
-  ]);
-  const [input, setInput] = useState("");
-  const [streaming, setStreaming] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const { used, remaining, increment, exhausted } = useDailyLimit();
-  const showQuickReplies = messages.length === 1;
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, streaming]);
-
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 100);
-  }, [open]);
-
-  async function send(text?: string) {
-    const msg = (text ?? input).trim();
-    if (!msg || streaming || exhausted) return;
-    setInput("");
-    increment();
-
-    const next: ChatMessage[] = [...messages, { role: "user", content: msg }];
-    setMessages(next);
-    setStreaming(true);
-    setMessages(m => [...m, { role: "assistant", content: "" }]);
-
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next.map(m => ({ role: m.role, content: m.content })) }),
-      });
-
-      if (!res.ok || !res.body) throw new Error("Request failed");
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let fullText = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const lines = decoder.decode(value).split("\n").filter(l => l.startsWith("data: "));
-        for (const line of lines) {
-          const data = line.slice(6);
-          if (data === "[DONE]") break;
-          try {
-            const json = JSON.parse(data);
-            const delta = json.choices?.[0]?.delta?.content;
-            if (delta) {
-              fullText += delta;
-              setMessages(m => {
-                const copy = [...m];
-                copy[copy.length - 1] = { role: "assistant", content: fullText };
-                return copy;
-              });
-            }
-          } catch { /* skip malformed */ }
-        }
-      }
-    } catch {
-      setMessages(m => {
-        const copy = [...m];
-        copy[copy.length - 1] = { role: "assistant", content: "Sorry, I couldn't connect right now. You can reach Clyde directly at princeclyde80@gmail.com" };
-        return copy;
-      });
-    } finally {
-      setStreaming(false);
-    }
-  }
-
-  const limitColor = remaining <= 3 ? "text-red-400" : remaining <= 8 ? "text-yellow-400" : "text-muted-foreground";
-
-  return (
-    <>
-      {/* Floating button */}
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-[0_0_24px_rgba(212,175,55,0.4)] flex items-center justify-center hover:scale-105 transition-transform"
-        aria-label="Chat with Letum"
-      >
-        {open ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </button>
-
-      {/* Chat panel */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-24px)] rounded-2xl border border-border shadow-2xl bg-background flex flex-col overflow-hidden"
-            style={{ maxHeight: "540px" }}
-          >
-            {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-card/80">
-              <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-primary" />
-              </div>
-              <div>
-                <p className="font-semibold text-sm text-foreground">Letum</p>
-                <p className="text-xs text-muted-foreground">Clyde's AI Assistant</p>
-              </div>
-              <span className={`ml-auto text-xs font-mono ${limitColor}`}>
-                {exhausted ? "Limit reached" : `${remaining}/${DAILY_LIMIT} left`}
-              </span>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3" style={{ minHeight: 0 }}>
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                  <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
-                    msg.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-sm"
-                      : "bg-secondary text-foreground rounded-bl-sm"
-                  }`}>
-                    {msg.content || (streaming && i === messages.length - 1 ? (
-                      <span className="flex gap-1 items-center h-4">
-                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "0ms" }} />
-                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "150ms" }} />
-                        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: "300ms" }} />
-                      </span>
-                    ) : "")}
-                  </div>
-                </div>
-              ))}
-
-              {/* Quick reply chips — only shown at start */}
-              {showQuickReplies && !exhausted && (
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {QUICK_REPLIES.map((q, i) => (
-                    <button
-                      key={i}
-                      onClick={() => send(q)}
-                      disabled={streaming}
-                      className="text-xs px-2.5 py-1.5 rounded-full border border-border bg-secondary hover:border-primary/50 hover:bg-secondary/80 text-foreground transition-colors disabled:opacity-40"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {exhausted && (
-                <div className="text-xs text-center text-muted-foreground bg-secondary/50 rounded-xl px-3 py-2">
-                  Daily limit reached. Come back tomorrow, or email Clyde directly at{" "}
-                  <a href="mailto:princeclyde80@gmail.com" className="text-primary underline">princeclyde80@gmail.com</a>
-                </div>
-              )}
-
-              <div ref={bottomRef} />
-            </div>
-
-            {/* Input */}
-            <div className="border-t border-border px-3 py-3 flex gap-2 bg-card/40">
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
-                placeholder={exhausted ? "Daily limit reached" : "Ask about Clyde…"}
-                disabled={streaming || exhausted}
-                className="flex-1 bg-secondary rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted-foreground border border-border focus:border-primary/50 transition-colors disabled:opacity-50"
-              />
-              <button
-                onClick={() => send()}
-                disabled={streaming || !input.trim() || exhausted}
-                className="w-9 h-9 rounded-xl bg-primary text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-40"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
-}
-
 export default function Home() {
   const [activePath, setActivePath] = useState<PathId>("housekeeping");
   const [showResume, setShowResume] = useState(false);
@@ -1108,6 +907,7 @@ export default function Home() {
   const [formError, setFormError] = useState("");
 
   const activePathData = PATHS.find(p => p.id === activePath) ?? PATHS[0];
+  const printPath = activePath === "all" ? ALL_IN_ONE_PATH : activePathData;
 
   const scrollToSection = (id: string, pathId?: PathId) => {
     if (pathId) setActivePath(pathId);
@@ -1161,7 +961,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
 
       {/* Print portal — invisible until print dialog opens */}
-      <PrintPortal path={activePathData} />
+      <PrintPortal path={printPath} />
 
       {/* ─── HERO ─── */}
       <section className="relative min-h-[100dvh] flex flex-col justify-center px-6 md:px-12 lg:px-24 py-20 border-b border-border/40">
@@ -1707,7 +1507,6 @@ export default function Home() {
         {new Date().getFullYear()} {PERSONAL_DATA.name} — Taguig, Philippines
       </footer>
 
-      <ChatWidget />
     </div>
   );
 }

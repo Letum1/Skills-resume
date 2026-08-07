@@ -1,15 +1,16 @@
-# [Project name]
+# Clyde Miles Bonita Portfolio
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A multi-path personal portfolio with color-coded, printable resumes for housekeeping, technology, security, finance, gaming QA, and an all-in-one profile.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/portfolio run dev` — run the portfolio preview
+- `pnpm --filter @workspace/api-server run dev` — run the shared API server when API routes are added
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- No database or AI service is required for the portfolio.
 
 ## Stack
 
@@ -30,11 +31,15 @@ _Populate as you build — non-obvious choices a reader couldn't infer from the 
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Browse five career-focused portfolio paths plus an all-in-one profile.
+- View and print/save each path as a two-page resume.
+- Printed resume headings, name, email, and photo border use a career-specific accent color so printed copies are easy to sort.
+- Send a message through the existing contact form.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Keep this website free of AI and database dependencies.
+- When improving printed resumes, prefer simple color differences over changing the resume content or structure.
 
 ## Gotchas
 
